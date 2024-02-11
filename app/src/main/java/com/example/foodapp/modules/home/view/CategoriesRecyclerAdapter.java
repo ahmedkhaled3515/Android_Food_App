@@ -1,5 +1,6 @@
 package com.example.foodapp.modules.home.view;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodapp.R;
 import com.example.foodapp.model.FoodCategory;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRecyclerAdapter.ViewHandler> {
     List<FoodCategory> categoryList;
-    public CategoriesRecyclerAdapter(List<FoodCategory> categoryList)
+    Context context;
+    public CategoriesRecyclerAdapter(Context context, List<FoodCategory> categoryList)
     {
         this.categoryList=categoryList;
+        this.context=context;
     }
     @NonNull
     @Override
@@ -31,8 +34,10 @@ public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRe
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesRecyclerAdapter.ViewHandler holder, int position) {
-        holder.tvCategory.setText(categoryList.get(position).getTitle());
-        holder.categoryImg.setImageResource(categoryList.get(position).getImg());
+        holder.tvCategory.setText(categoryList.get(position).getStrCategory());
+        Glide.with(context)
+                .load(categoryList.get(position).getStrCategoryThumb())
+                .into(holder.categoryImg);
     }
 
     @Override
@@ -46,7 +51,7 @@ public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRe
         public ViewHandler(@NonNull View itemView) {
             super(itemView);
             categoryImg= itemView.findViewById(R.id.categoryImg);
-            tvCategory=itemView.findViewById(R.id.tvCategory);
+            tvCategory=itemView.findViewById(R.id.tvCategories);
         }
     }
 }

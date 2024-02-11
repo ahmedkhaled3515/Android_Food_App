@@ -1,27 +1,37 @@
 package com.example.foodapp.model;
 
 public class FoodCategory {
-    int img;
-    String title;
+    String strCategory;
+    String strCategoryThumb;
+    String strCategoryDescription;
 
-    public FoodCategory(int img, String title) {
-        this.img = img;
-        this.title = title;
+    public FoodCategory(String strCategory, String strCategoryThumb, String getStrCategoryDescription) {
+        this.strCategory = strCategory;
+        this.strCategoryThumb = strCategoryThumb;
+        this.strCategoryDescription = getStrCategoryDescription;
     }
 
-    public int getImg() {
-        return img;
+    public String getStrCategory() {
+        return strCategory;
     }
 
-    public void setImg(int img) {
-        this.img = img;
+    public void setStrCategory(String strCategory) {
+        this.strCategory = strCategory;
     }
 
-    public String getTitle() {
-        return title;
+    public String getStrCategoryThumb() {
+        return strCategoryThumb;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setStrCategoryThumb(String strCategoryThumb) {
+        this.strCategoryThumb = strCategoryThumb;
+    }
+
+    public String getStrCategoryDescription() {
+        return strCategoryDescription;
+    }
+
+    public void setStrCategoryDescription(String getStrCategoryDescription) {
+        this.strCategoryDescription = getStrCategoryDescription;
     }
 }
