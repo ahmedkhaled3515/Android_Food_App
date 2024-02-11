@@ -19,6 +19,8 @@ public class HomePresenter implements NetworkCallBack {
         appRemoteDataSource.getMealCategories();
         appRemoteDataSource.getCountries();
         appRemoteDataSource.getRandomMeal();
+        appRemoteDataSource.getMeals();
+        appRemoteDataSource.getMealsByCategory("Seafood");
     }
     @Override
     public void onGetCategoriesSuccess(List<FoodCategory> categoryList) {
@@ -48,5 +50,25 @@ public class HomePresenter implements NetworkCallBack {
     @Override
     public void onGetRandomMealFailure(Throwable throwable) {
         homeInterface.showRandomMealError(throwable);
+    }
+
+    @Override
+    public void onGetMealsSuccessful(List<Meal> mealList) {
+        homeInterface.showMeals(mealList);
+    }
+
+    @Override
+    public void onGetMealsFailure(Throwable throwable) {
+        homeInterface.showMealsError(throwable);
+    }
+
+    @Override
+    public void onGetMealsByCategorySuccessful(List<Meal> mealList) {
+
+    }
+
+    @Override
+    public void onGetMealsByCategoryFailure(Throwable t) {
+
     }
 }

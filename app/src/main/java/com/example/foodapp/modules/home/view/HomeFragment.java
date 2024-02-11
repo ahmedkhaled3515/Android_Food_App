@@ -103,4 +103,14 @@ public class HomeFragment extends Fragment implements HomeInterface  {
     @Override
     public void showRandomMealError(Throwable throwable) {
         Toast.makeText(getContext(),"SomeThing is Wrong with the network",Toast.LENGTH_SHORT).show();    }
+
+    @Override
+    public void showMeals(List<Meal> mealList) {
+
+    }
+
+    @Override
+    public void showMealsError(Throwable throwable) {
+
+    }
 }

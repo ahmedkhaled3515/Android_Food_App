@@ -86,4 +86,35 @@ public class AppRemoteDataSource {
             }
         });
     }
+    public void getMeals()
+    {
+        Call<MealsResponse> call = network.getMeals();
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
+                Log.i("TAG", "onResponse: ddddddd" + response.body().getMealList().size() );
+                networkCallBack.onGetMealsSuccessful(response.body().getMealList());
+            }
+
+            @Override
+            public void onFailure(Call<MealsResponse> call, Throwable t) {
+                networkCallBack.onGetMealsFailure(t);
+            }
+        });
+    }
+    public void getMealsByCategory(String category)
+    {
+        Call<MealsResponse> call = network.getMealsByCategory(category);
+        call.enqueue(new Callback<MealsResponse>() {
+            @Override
+            public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
+                Log.i("TAG", "onResponse: "+ response.body().getMealList().size());
+            }
+
+            @Override
+            public void onFailure(Call<MealsResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 }

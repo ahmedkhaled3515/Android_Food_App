@@ -13,4 +13,6 @@ public interface HomeInterface {
     public void showCountriesError(Throwable throwable);
     public void showRandomMeal(Meal meal);
     public void showRandomMealError(Throwable throwable);
+    public void showMeals(List<Meal> mealList);
+    public void showMealsError(Throwable throwable);
 }

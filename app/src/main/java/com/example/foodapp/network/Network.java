@@ -11,6 +11,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface Network {
     @GET("categories.php")
@@ -19,4 +20,8 @@ public interface Network {
     public Call<FoodCountryResponse> getCountries();
     @GET("random.php")
     public Call<MealsResponse> getMealOfTheDay();
+    @GET("search.php?f=a")
+    public Call<MealsResponse> getMeals();
+    @GET("filter.php")
+    public Call<MealsResponse> getMealsByCategory(@Query("c") String category);
 }
