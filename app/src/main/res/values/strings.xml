@@ -63,4 +63,8 @@
     <string name="name_text">Name</string>
     <string name="password_hint">* * * * * * *</string>
     <string name="password_confirm">RE-TYPE PASSWORD</string>
+    <string name="daily_meal">Daily Meal</string>
+    <string name="categories_text">Categories</string>
+    <string name="view_all"><![CDATA[View All >]]></string>
+    <string name="countries_list">Countries List</string>
 </resources>
