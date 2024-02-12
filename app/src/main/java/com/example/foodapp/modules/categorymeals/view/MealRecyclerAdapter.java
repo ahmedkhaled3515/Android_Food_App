@@ -30,7 +30,6 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
     public MealRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view =inflater.inflate(R.layout.meal_card_layout,parent,false  );
-
         return new ViewHolder(view);
     }
 

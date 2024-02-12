@@ -3,6 +3,9 @@ package com.example.foodapp.modules.home.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +35,7 @@ import java.util.List;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements HomeInterface  {
+public class HomeFragment extends Fragment implements HomeInterface,CategoryClickListener  {
 
 
 
@@ -41,6 +44,8 @@ public class HomeFragment extends Fragment implements HomeInterface  {
         super.onCreate(savedInstanceState);
 
     }
+    Bundle bundle;
+    View view;
     RecyclerView categoryRecycler;
     RecyclerView countryRecycler;
     CategoriesRecyclerAdapter categoryAdapter;
@@ -50,8 +55,10 @@ public class HomeFragment extends Fragment implements HomeInterface  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        bundle=new Bundle();
+        bundle.putString("name","ahmed");
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_home, container, false);
+        view =inflater.inflate(R.layout.fragment_home, container, false);
         categoryRecycler=view.findViewById(R.id.categoryRecycler);
         countryRecycler=view.findViewById(R.id.countryRecycler);
         tvDaily=view.findViewById(R.id.tvDaily);
@@ -69,7 +76,7 @@ public class HomeFragment extends Fragment implements HomeInterface  {
 
     @Override
     public void showCategories(List<FoodCategory> categoryList) {
-        categoryAdapter = new CategoriesRecyclerAdapter(this.getContext(),categoryList);
+        categoryAdapter = new CategoriesRecyclerAdapter(this.getContext(),this,categoryList);
         categoryRecycler.setAdapter(categoryAdapter);
     }
 
@@ -113,4 +120,8 @@ public class HomeFragment extends Fragment implements HomeInterface  {
     public void showMealsError(Throwable throwable) {
 
     }
+
+    @Override
+    public void onCardClickListener(String category) {
+        NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_homeFragment_to_categoryMealsFragment,bundle);    }
 }

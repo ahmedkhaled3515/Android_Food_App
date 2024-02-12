@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,10 +18,12 @@ import com.example.foodapp.model.FoodCategory;
 import java.util.List;
 
 public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRecyclerAdapter.ViewHandler> {
+    CategoryClickListener categoryClickListener;
     List<FoodCategory> categoryList;
     Context context;
-    public CategoriesRecyclerAdapter(Context context, List<FoodCategory> categoryList)
+    public CategoriesRecyclerAdapter(Context context,CategoryClickListener categoryClickListener, List<FoodCategory> categoryList)
     {
+        this.categoryClickListener=categoryClickListener;
         this.categoryList=categoryList;
         this.context=context;
     }
@@ -38,6 +41,12 @@ public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRe
         Glide.with(context)
                 .load(categoryList.get(position).getStrCategoryThumb())
                 .into(holder.categoryImg);
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoryClickListener.onCardClickListener(categoryList.get(position).getStrCategory());
+            }
+        });
     }
 
     @Override
@@ -48,10 +57,12 @@ public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRe
     public class ViewHandler extends RecyclerView.ViewHolder {
         ImageView categoryImg;
         TextView tvCategory;
+        ConstraintLayout constraintLayout;
         public ViewHandler(@NonNull View itemView) {
             super(itemView);
             categoryImg= itemView.findViewById(R.id.categoryImg);
             tvCategory=itemView.findViewById(R.id.tvCategories);
+            constraintLayout=itemView.findViewById(R.id.categoryLayout);
         }
     }
 }

@@ -109,6 +109,7 @@ public class AppRemoteDataSource {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
                 Log.i("TAG", "onResponse: "+ response.body().getMealList().size());
+                networkCallBack.onGetMealsByCategorySuccessful(response.body().getMealList());
             }
 
             @Override
