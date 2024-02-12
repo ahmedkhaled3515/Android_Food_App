@@ -15,11 +15,11 @@ public class HomePresenter implements NetworkCallBack {
     public HomePresenter(HomeInterface homeInterface)
     {
         this.homeInterface= homeInterface;
-        appRemoteDataSource=AppRemoteDataSource.getInstance(this);
+        appRemoteDataSource=AppRemoteDataSource.getInstance();
+        appRemoteDataSource.setNetworkCallBack(this);
         appRemoteDataSource.getMealCategories();
         appRemoteDataSource.getCountries();
         appRemoteDataSource.getRandomMeal();
-        appRemoteDataSource.getMeals();
     }
     @Override
     public void onGetCategoriesSuccess(List<FoodCategory> categoryList) {

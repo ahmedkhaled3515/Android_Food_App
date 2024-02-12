@@ -19,10 +19,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppRemoteDataSource {
     Retrofit retrofit;
     Network network;
-    NetworkCallBack networkCallBack;
+    NetworkCallBack  networkCallBack;
     final static String BASE_URL="https://www.themealdb.com/api/json/v1/1/";
     private static AppRemoteDataSource instance = null;
-    private AppRemoteDataSource(NetworkCallBack networkCallBack){
+    private AppRemoteDataSource(){
         this.networkCallBack=networkCallBack;
         retrofit= new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -30,11 +30,15 @@ public class AppRemoteDataSource {
                 .build();
         network=retrofit.create(Network.class);
     }
-    public static AppRemoteDataSource getInstance(NetworkCallBack networkCallBack) {
+    public static AppRemoteDataSource getInstance() {
         if(instance == null){
-            instance=new AppRemoteDataSource(networkCallBack);
+            instance=new AppRemoteDataSource();
         }
         return instance;
+    }
+    public void setNetworkCallBack(NetworkCallBack networkCallBack)
+    {
+        this.networkCallBack=networkCallBack;
     }
     public void getMealCategories()
     {
@@ -108,7 +112,7 @@ public class AppRemoteDataSource {
         call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
-                Log.i("TAG", "onResponse: "+ response.body().getMealList().size());
+                Log.i("TAG", "onResponse: get meals by category "+ response.body().getMealList().size());
                 networkCallBack.onGetMealsByCategorySuccessful(response.body().getMealList());
             }
 

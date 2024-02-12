@@ -37,17 +37,18 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsInte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        String category="";
         Bundle args = getArguments();
         if (args != null) {
-            String type = args.getString("name");
-            Log.d("TAG", "onCreateView: hello from meals category "+ type);
+            category = args.getString("category");
+            Log.d("TAG", "onCreateView: hello from meals category "+ category);
         }
         View view =inflater.inflate(R.layout.fragment_category_meals, container, false);
         recyclerView = view.findViewById(R.id.mealsRecycler);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        CategoryMealsPresenter presenter=new CategoryMealsPresenter(this);
+        CategoryMealsPresenter presenter=new CategoryMealsPresenter(this,category);
         Log.i("TAG", "onCreateView: categoriesMeals fragment " );
         return view;
     }

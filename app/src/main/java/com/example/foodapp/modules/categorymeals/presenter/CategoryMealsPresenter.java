@@ -13,12 +13,14 @@ import java.util.List;
 
 public class CategoryMealsPresenter implements NetworkCallBack {
     CategoryMealsInterface categoryMealsInterface;
-    public CategoryMealsPresenter(CategoryMealsInterface categoryMealsInterface)
+    public CategoryMealsPresenter(CategoryMealsInterface categoryMealsInterface,String category)
     {
         this.categoryMealsInterface=categoryMealsInterface;
-        AppRemoteDataSource appRemoteDataSource=AppRemoteDataSource.getInstance(this);
-        appRemoteDataSource.getMealsByCategory("Seafood");
+        AppRemoteDataSource appRemoteDataSource=AppRemoteDataSource.getInstance();
+        appRemoteDataSource.setNetworkCallBack(this);
+        appRemoteDataSource.getMealsByCategory(category);
     }
+
     @Override
     public void onGetCategoriesSuccess(List<FoodCategory> categoryList) {
 
