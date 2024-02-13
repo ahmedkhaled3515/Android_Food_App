@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                if(navDestination.getId() == R.id.loginFragment2 || navDestination.getId()==R.id.signupFragment)
+                if(navDestination.getId() != R.id.homeFragment || navDestination.getId()!=R.id.favoriteFragment || navDestination.getId() != R.id.optionsFragment)
                 {
                     navBar.setActivated(false);
                     navBar.setEnabled(false);

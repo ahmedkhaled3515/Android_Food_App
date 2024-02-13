@@ -20,8 +20,10 @@ import java.util.List;
 public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapter.ViewHolder> {
     List<Meal> mealList;
     Context context;
-    public MealRecyclerAdapter(Context context,List<Meal> mealList)
+    MealsClickListener clickListener;
+    public MealRecyclerAdapter(Context context,MealsClickListener clickListener,List<Meal> mealList)
     {
+        this.clickListener=clickListener;
         this.context=context;
         this.mealList=mealList;
     }
@@ -39,6 +41,12 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
                 .load(mealList.get(position).getStrMealThumb())
                 .into(holder.imgView);
         holder.tvMeal.setText(mealList.get(position).getStrMeal());
+        holder.btnView.setOnClickListener(v -> {
+            clickListener.onViewClickListener(mealList.get(position));
+        });
+        holder.btnFavourite.setOnClickListener(v -> {
+            clickListener.onFavoriteClickListener(mealList.get(position));
+        });
     }
 
     @Override
@@ -50,9 +58,11 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         ImageView imgView;
         TextView tvMeal;
         Button btnFavourite;
+        Button btnView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            btnView=itemView.findViewById(R.id.btnView);
             imgView=itemView.findViewById(R.id.mealImage);
             tvMeal=itemView.findViewById(R.id.tvMealName);
             btnFavourite=itemView.findViewById(R.id.btnFavorite);

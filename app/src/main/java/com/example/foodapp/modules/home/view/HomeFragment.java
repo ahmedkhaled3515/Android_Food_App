@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HomePresenter homePresenter=new HomePresenter(this);
+
     }
     Bundle bundle;
     View view;
@@ -69,10 +69,14 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
         LinearLayoutManager countriesLayoutManger=new LinearLayoutManager(this.getContext());
         countriesLayoutManger.setOrientation(RecyclerView.HORIZONTAL);
         countryRecycler.setLayoutManager(countriesLayoutManger);
-
+        HomePresenter homePresenter=new HomePresenter(this);
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void showCategories(List<FoodCategory> categoryList) {

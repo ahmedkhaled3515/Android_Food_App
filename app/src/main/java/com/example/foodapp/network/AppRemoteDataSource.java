@@ -90,19 +90,19 @@ public class AppRemoteDataSource {
             }
         });
     }
-    public void getMeals()
+    public void getMeals(String mealName)
     {
-        Call<MealsResponse> call = network.getMeals();
+        Call<MealsResponse> call = network.getMeals(mealName);
         call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
                 Log.i("TAG", "onResponse: ddddddd" + response.body().getMealList().size() );
-                networkCallBack.onGetMealsSuccessful(response.body().getMealList());
+                networkCallBack.onGetMealSuccessful(response.body().getMealList());
             }
 
             @Override
             public void onFailure(Call<MealsResponse> call, Throwable t) {
-                networkCallBack.onGetMealsFailure(t);
+                networkCallBack.onGetMealFailure(t);
             }
         });
     }

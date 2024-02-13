@@ -3,6 +3,7 @@ package com.example.foodapp.modules.categorymeals.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +23,7 @@ import java.util.List;
  * Use the {@link CategoryMealsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoryMealsFragment extends Fragment implements CategoryMealsInterface{
+public class CategoryMealsFragment extends Fragment implements CategoryMealsInterface , MealsClickListener{
 
 
 
@@ -56,12 +57,22 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsInte
     @Override
     public void showMeals(List<Meal> mealList) {
         Log.i("TAG", "showMeals: ddddddddddddddddd");
-        mealRecyclerAdapter= new MealRecyclerAdapter(this.getContext(),mealList);
+        mealRecyclerAdapter= new MealRecyclerAdapter(this.getContext(),this,mealList);
         recyclerView.setAdapter(mealRecyclerAdapter);
     }
 
     @Override
     public void showMealsError(Throwable t) {
+
+    }
+
+    @Override
+    public void onViewClickListener(Meal clickedMeal) {
+
+    }
+
+    @Override
+    public void onFavoriteClickListener(Meal clickedMeal) {
 
     }
 }

@@ -41,7 +41,7 @@ public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesRe
         Glide.with(context)
                 .load(categoryList.get(position).getStrCategoryThumb())
                 .into(holder.categoryImg);
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 categoryClickListener.onCardClickListener(categoryList.get(position).getStrCategory());

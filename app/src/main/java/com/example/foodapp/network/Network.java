@@ -20,8 +20,8 @@ public interface Network {
     public Call<FoodCountryResponse> getCountries();
     @GET("random.php")
     public Call<MealsResponse> getMealOfTheDay();
-    @GET("search.php?f=a")
-    public Call<MealsResponse> getMeals();
+    @GET("search.php")
+    public Call<MealsResponse> getMeals(@Query("s") String mealName);
     @GET("filter.php")
     public Call<MealsResponse> getMealsByCategory(@Query("c") String category);
 }

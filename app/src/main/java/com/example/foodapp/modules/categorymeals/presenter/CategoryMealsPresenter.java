@@ -52,12 +52,12 @@ public class CategoryMealsPresenter implements NetworkCallBack {
     }
 
     @Override
-    public void onGetMealsSuccessful(List<Meal> mealList) {
+    public void onGetMealSuccessful(List<Meal> mealList) {
 
     }
 
     @Override
-    public void onGetMealsFailure(Throwable throwable) {
+    public void onGetMealFailure(Throwable throwable) {
 
     }
 

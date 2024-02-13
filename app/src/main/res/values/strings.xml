@@ -67,4 +67,6 @@
     <string name="categories_text">Categories</string>
     <string name="view_all"><![CDATA[View All >]]></string>
     <string name="countries_list">Countries List</string>
+    <string name="add_to_favourite_button">Add To Favorite</string>
+    <string name="view_button">view</string>
 </resources>
