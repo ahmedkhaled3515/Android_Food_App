@@ -9,16 +9,22 @@ import com.example.foodapp.network.NetworkCallBack;
 
 import java.util.List;
 
-public class MealPresenter implements NetworkCallBack {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+
+public class MealPresenter{
     MealInterface mealInterface;
-    public MealPresenter(MealInterface mealInterface)
+    public MealPresenter(MealInterface mealInterface,String mealName)
     {
         this.mealInterface=mealInterface;
         AppRemoteDataSource appRemoteDataSource= AppRemoteDataSource.getInstance();
-        appRemoteDataSource.setNetworkCallBack(this);
-        appRemoteDataSource.getMeals("Arrabiata");
+        appRemoteDataSource.getMeals(mealName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealsResponse -> {
+                    mealInterface.showMealDetails(mealsResponse.getMealList().get(0));
+                });
+
     }
-    @Override
+    /*@Override
     public void onGetCategoriesSuccess(List<FoodCategory> categoryList) {
 
     }
@@ -66,5 +72,5 @@ public class MealPresenter implements NetworkCallBack {
     @Override
     public void onGetMealsByCategoryFailure(Throwable t) {
 
-    }
+    }*/
 }

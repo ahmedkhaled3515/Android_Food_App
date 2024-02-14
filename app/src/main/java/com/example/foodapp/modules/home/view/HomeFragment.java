@@ -30,12 +30,8 @@ import com.example.foodapp.network.NetworkCallBack;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomeFragment extends Fragment implements HomeInterface,CategoryClickListener  {
+
+public class HomeFragment extends Fragment implements HomeInterface,CategoryClickListener,CountryClickListener {
 
 
 
@@ -92,7 +88,7 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
 
     @Override
     public void showCountries(List<FoodCountryResponse.FoodCountry> foodCountryList) {
-        countriesAdapter=new CountriesRecyclerAdapter(foodCountryList);
+        countriesAdapter=new CountriesRecyclerAdapter(this,foodCountryList);
         countryRecycler.setAdapter(countriesAdapter);
     }
 
@@ -128,5 +124,10 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
     @Override
     public void onCardClickListener(String category) {
         bundle.putString("category",category);
+        NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_homeFragment_to_categoryMealsFragment,bundle);    }
+
+    @Override
+    public void onCountryClickListener(String country) {
+        bundle.putString("country",country);
         NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_homeFragment_to_categoryMealsFragment,bundle);    }
 }

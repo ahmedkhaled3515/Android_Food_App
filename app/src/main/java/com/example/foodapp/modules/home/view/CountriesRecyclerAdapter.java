@@ -15,9 +15,11 @@ import java.util.List;
 
 public class CountriesRecyclerAdapter extends RecyclerView.Adapter<CountriesRecyclerAdapter.ViewHolder> {
     List<FoodCountryResponse.FoodCountry> countries;
-    public CountriesRecyclerAdapter(List<FoodCountryResponse.FoodCountry> countries)
+    CountryClickListener clickListener;
+    public CountriesRecyclerAdapter(CountryClickListener clickListener,List<FoodCountryResponse.FoodCountry> countries)
     {
         this.countries=countries;
+        this.clickListener=clickListener;
     }
 
     @NonNull
@@ -31,6 +33,9 @@ public class CountriesRecyclerAdapter extends RecyclerView.Adapter<CountriesRecy
     @Override
     public void onBindViewHolder(@NonNull CountriesRecyclerAdapter.ViewHolder holder, int position) {
         holder.tvCountry.setText(countries.get(position).getStrArea());
+        holder.itemView.setOnClickListener(v -> {
+            clickListener.onCountryClickListener(countries.get(position).getStrArea());
+        });
     }
 
     @Override

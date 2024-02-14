@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mealFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.foodapp.modules.signup.view.SignupFragment"
@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_options" />
     <fragment
         android:id="@+id/categoryMealsFragment"
-        android:name="com.example.foodapp.modules.categorymeals.view.CategoryMealsFragment"
+        android:name="com.example.foodapp.modules.categorymeals.view.MealsListFragment"
         android:label="fragment_category_meals"
         tools:layout="@layout/fragment_category_meals" >
         <action

@@ -14,19 +14,15 @@ import android.view.ViewGroup;
 
 import com.example.foodapp.R;
 import com.example.foodapp.model.Meal;
-import com.example.foodapp.modules.categorymeals.presenter.CategoryMealsPresenter;
+import com.example.foodapp.modules.categorymeals.presenter.MealsListPresenter;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoryMealsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CategoryMealsFragment extends Fragment implements CategoryMealsInterface , MealsClickListener{
+
+public class MealsListFragment extends Fragment implements MealsListInterface, MealsClickListener{
 
 
-
+    Bundle bundle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +34,23 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsInte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        bundle= new Bundle();
         String category="";
+        String country="";
         Bundle args = getArguments();
+        MealsListPresenter presenter=new MealsListPresenter(this);
         if (args != null) {
+
             category = args.getString("category");
+            country = args.getString("country");
+            if(category == null)
+            {
+                presenter.getMealsByCountry(country);
+            }
+            else if(country == null)
+            {
+                presenter.getMealsByCategory(category);
+            }
             Log.d("TAG", "onCreateView: hello from meals category "+ category);
         }
         View view =inflater.inflate(R.layout.fragment_category_meals, container, false);
@@ -49,7 +58,7 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsInte
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        CategoryMealsPresenter presenter=new CategoryMealsPresenter(this,category);
+
         Log.i("TAG", "onCreateView: categoriesMeals fragment " );
         return view;
     }
@@ -68,7 +77,8 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsInte
 
     @Override
     public void onViewClickListener(Meal clickedMeal) {
-
+        bundle.putString("meal",clickedMeal.getStrMeal());
+        NavHostFragment.findNavController(MealsListFragment.this).navigate(R.id.action_categoryMealsFragment_to_mealFragment,bundle);
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +45,8 @@ public class MealFragment extends Fragment implements MealInterface {
     VideoView mealVideo;
     WebView webView;
     View view;
+    RecyclerView recyclerView;
+    IngerdientsRecyclerAdapter ingredientsAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,20 +57,31 @@ public class MealFragment extends Fragment implements MealInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_meal, container, false);
+
         // Inflate the layout for this fragment
-        MealPresenter presenter=new MealPresenter(this);
+        Bundle arg=getArguments();
+        if(arg !=null) {
+            String mealName=arg.getString("meal");
+            MealPresenter presenter = new MealPresenter(this,mealName);
+        }
         mealImg = view.findViewById(R.id.mealImgMealFragment);
         tvMealName = view.findViewById(R.id.mealNameMealFragment);
         tvMealCategory = view.findViewById(R.id.mealCategoryMealFragment);
         tvMealCountry=view.findViewById(R.id.mealAreaMealFragment);
         tvMealDescription=view.findViewById(R.id.mealDescriptionMealFragment);
         webView=view.findViewById(R.id.webView);
+        recyclerView = view.findViewById(R.id.ingrediantRecyclerView);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
 
         return view;
     }
 
     @Override
     public void showMealDetails(Meal meal) {
+
         Glide.with(this)
                 .load(meal.getStrMealThumb())
                 .transform(new RoundedCorners(50))
@@ -76,6 +91,8 @@ public class MealFragment extends Fragment implements MealInterface {
         tvMealCountry.setText(meal.getStrArea());
         tvMealDescription.setText(meal.getStrInstructions());
         setMealVideo(meal.getStrYoutube());
+        ingredientsAdapter=new IngerdientsRecyclerAdapter(this.getContext(),meal.getIngredientsList());
+        recyclerView.setAdapter(ingredientsAdapter);
     }
     public static String convertToEmbeddedUrl(String youtubeUrl) {
         String videoId = extractVideoId(youtubeUrl);
@@ -97,7 +114,7 @@ public class MealFragment extends Fragment implements MealInterface {
     public void setMealVideo(String url)
     {
         Log.d("TAG", "setMealVideo: width " +webView.getX());
-        String videoUrl = convertToEmbeddedUrl("https://www.youtube.com/watch?v=1IszT_guI08"); // Replace VIDEO_ID with the actual video ID or embed URL
+        String videoUrl = convertToEmbeddedUrl(url); // Replace VIDEO_ID with the actual video ID or embed URL
         String video="<iframe width='400' height=\"200\" src= '"+videoUrl+"' title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
         webView.getSettings().setJavaScriptEnabled(true); // Enable JavaScript (required for video playback)
         webView.setWebViewClient(new WebViewClient(){

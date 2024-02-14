@@ -1,6 +1,9 @@
 package com.example.foodapp.model;
 
+import java.util.ArrayList;
+
 public class Meal {
+
     String strMeal;
     String strDrinkAlternate;
     String strCategory;
@@ -16,6 +19,20 @@ public class Meal {
     String strIngredient5;
     String strIngredient6;
     String strIngredient7;
+    String strIngredient8;
+    String strIngredient9;
+    String strIngredient10;
+    String strIngredient11;
+    String strIngredient12;
+    String strIngredient13;
+    String strIngredient14;
+    String strIngredient15;
+    String strIngredient16;
+    String strIngredient17;
+    String strIngredient18;
+    String strIngredient19;
+    String strIngredient20;
+    ArrayList<String> ingredientsList ;
     String strMeasure1;
     String strMeasure2;
     String strMeasure3;
@@ -26,33 +43,39 @@ public class Meal {
     String strSource;
     String strImageSource;
     String strCreativeCommonsConfirmed;
+    public Meal()
+    {
 
-    public Meal(String strMeal, String strDrinkAlternate, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strMeasure1, String strMeasure2, String strMeasure3, String strMeasure4, String strMeasure5, String strMeasure6, String strMeasure7, String strSource, String strImageSource, String strCreativeCommonsConfirmed) {
-        this.strMeal = strMeal;
-        this.strDrinkAlternate = strDrinkAlternate;
-        this.strCategory = strCategory;
-        this.strArea = strArea;
-        this.strInstructions = strInstructions;
-        this.strMealThumb = strMealThumb;
-        this.strTags = strTags;
-        this.strYoutube = strYoutube;
-        this.strIngredient1 = strIngredient1;
-        this.strIngredient2 = strIngredient2;
-        this.strIngredient3 = strIngredient3;
-        this.strIngredient4 = strIngredient4;
-        this.strIngredient5 = strIngredient5;
-        this.strIngredient6 = strIngredient6;
-        this.strIngredient7 = strIngredient7;
-        this.strMeasure1 = strMeasure1;
-        this.strMeasure2 = strMeasure2;
-        this.strMeasure3 = strMeasure3;
-        this.strMeasure4 = strMeasure4;
-        this.strMeasure5 = strMeasure5;
-        this.strMeasure6 = strMeasure6;
-        this.strMeasure7 = strMeasure7;
-        this.strSource = strSource;
-        this.strImageSource = strImageSource;
-        this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
+    }
+
+
+    public ArrayList<String> getIngredientsList() {
+        return ingredientsList;
+    }
+
+    public void setIngredientsList() {
+        ingredientsList=new ArrayList<String>();
+        ingredientsList.add(strIngredient1);
+        ingredientsList.add(strIngredient2);
+        ingredientsList.add(strIngredient3);
+        ingredientsList.add(strIngredient4);
+        ingredientsList.add(strIngredient5);
+        ingredientsList.add(strIngredient6);
+        ingredientsList.add(strIngredient7);
+        ingredientsList.add(strIngredient8);
+        ingredientsList.add(strIngredient9);
+        ingredientsList.add(strIngredient10);
+        ingredientsList.add(strIngredient11);
+        ingredientsList.add(strIngredient12);
+        ingredientsList.add(strIngredient13);
+        ingredientsList.add(strIngredient14);
+        ingredientsList.add(strIngredient15);
+        ingredientsList.add(strIngredient16);
+        ingredientsList.add(strIngredient17);
+        ingredientsList.add(strIngredient18);
+        ingredientsList.add(strIngredient19);
+        ingredientsList.add(strIngredient20);
+        ingredientsList.removeIf(ing -> ing.equals(""));
     }
 
     public String getStrMeal() {
@@ -249,6 +272,110 @@ public class Meal {
 
     public String getStrCreativeCommonsConfirmed() {
         return strCreativeCommonsConfirmed;
+    }
+
+    public String getStrIngredient8() {
+        return strIngredient8;
+    }
+
+    public void setStrIngredient8(String strIngredient8) {
+        this.strIngredient8 = strIngredient8;
+    }
+
+    public String getStrIngredient9() {
+        return strIngredient9;
+    }
+
+    public void setStrIngredient9(String strIngredient9) {
+        this.strIngredient9 = strIngredient9;
+    }
+
+    public String getStrIngredient10() {
+        return strIngredient10;
+    }
+
+    public void setStrIngredient10(String strIngredient10) {
+        this.strIngredient10 = strIngredient10;
+    }
+
+    public String getStrIngredient11() {
+        return strIngredient11;
+    }
+
+    public void setStrIngredient11(String strIngredient11) {
+        this.strIngredient11 = strIngredient11;
+    }
+
+    public String getStrIngredient12() {
+        return strIngredient12;
+    }
+
+    public void setStrIngredient12(String strIngredient12) {
+        this.strIngredient12 = strIngredient12;
+    }
+
+    public String getStrIngredient13() {
+        return strIngredient13;
+    }
+
+    public void setStrIngredient13(String strIngredient13) {
+        this.strIngredient13 = strIngredient13;
+    }
+
+    public String getStrIngredient14() {
+        return strIngredient14;
+    }
+
+    public void setStrIngredient14(String strIngredient14) {
+        this.strIngredient14 = strIngredient14;
+    }
+
+    public String getStrIngredient15() {
+        return strIngredient15;
+    }
+
+    public void setStrIngredient15(String strIngredient15) {
+        this.strIngredient15 = strIngredient15;
+    }
+
+    public String getStrIngredient16() {
+        return strIngredient16;
+    }
+
+    public void setStrIngredient16(String strIngredient16) {
+        this.strIngredient16 = strIngredient16;
+    }
+
+    public String getStrIngredient17() {
+        return strIngredient17;
+    }
+
+    public void setStrIngredient17(String strIngredient17) {
+        this.strIngredient17 = strIngredient17;
+    }
+
+    public String getStrIngredient18() {
+        return strIngredient18;
+    }
+
+    public void setStrIngredient18(String strIngredient18) {
+        this.strIngredient18 = strIngredient18;
+    }
+
+    public String getStrIngredient19() {
+        return strIngredient19;
+    }
+
+    public void setStrIngredient19(String strIngredient19) {
+        this.strIngredient19 = strIngredient19;
+    }
+
+    public String getStrIngredient20() {
+        return strIngredient20;
+    }
+
+    public void setStrIngredient20(String strIngredient20) {
+        this.strIngredient20 = strIngredient20;
     }
 
     public void setStrCreativeCommonsConfirmed(String strCreativeCommonsConfirmed) {

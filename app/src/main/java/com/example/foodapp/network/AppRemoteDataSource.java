@@ -10,10 +10,18 @@ import com.example.foodapp.model.MealsResponse;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppRemoteDataSource {
@@ -27,6 +35,7 @@ public class AppRemoteDataSource {
         retrofit= new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         network=retrofit.create(Network.class);
     }
@@ -40,11 +49,11 @@ public class AppRemoteDataSource {
     {
         this.networkCallBack=networkCallBack;
     }
-    public void getMealCategories()
+    public Observable<FoodCategoryResponse> getMealCategories()
     {
         Log.i("TAG", "getMealCategories: dddddddddddddddddddddddd");
-        Call<FoodCategoryResponse> call= network.getCategories();
-        call.enqueue(new Callback<FoodCategoryResponse>() {
+        Observable<FoodCategoryResponse> call= network.getCategories();
+        /*call.enqueue(new Callback<FoodCategoryResponse>() {
             @Override
             public void onResponse(Call<FoodCategoryResponse> call, Response<FoodCategoryResponse> response) {
                 Log.d("TAG", "onResponse: ddddddddddddd"+response.body().getList().size());
@@ -56,12 +65,13 @@ public class AppRemoteDataSource {
             public void onFailure(Call<FoodCategoryResponse> call, Throwable t) {
                 t.printStackTrace();
             }
-        });
+        });*/
+        return call.subscribeOn(Schedulers.io());
     }
-    public void getCountries()
+    public Observable<FoodCountryResponse> getCountries()
     {
-        Call<FoodCountryResponse> call= network.getCountries();
-        call.enqueue(new Callback<FoodCountryResponse>() {
+        Observable<FoodCountryResponse> call= network.getCountries();
+        /*call.enqueue(new Callback<FoodCountryResponse>() {
             @Override
             public void onResponse(Call<FoodCountryResponse> call, Response<FoodCountryResponse> response) {
 
@@ -72,12 +82,14 @@ public class AppRemoteDataSource {
             public void onFailure(Call<FoodCountryResponse> call, Throwable t) {
                 networkCallBack.onGetCountriesFailure(t);
             }
-        });
+        });*/
+        return call.subscribeOn(Schedulers.io());
     }
-    public void getRandomMeal()
+    public Observable<MealsResponse> getRandomMeal()
     {
-        Call<MealsResponse> call=network.getMealOfTheDay();
-        call.enqueue(new Callback<MealsResponse>() {
+        Observable<MealsResponse> call=network.getMealOfTheDay();
+
+        /*call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
                 Log.d("TAG", "onResponse:ffffffffffffffff "+response.body());
@@ -88,38 +100,53 @@ public class AppRemoteDataSource {
             public void onFailure(Call<MealsResponse> call, Throwable t) {
                 networkCallBack.onGetRandomMealFailure(t);
             }
-        });
+        });*/
+        return call.subscribeOn(Schedulers.io());
+
     }
-    public void getMeals(String mealName)
+    public Observable<MealsResponse> getMeals(String mealName)
     {
-        Call<MealsResponse> call = network.getMeals(mealName);
-        call.enqueue(new Callback<MealsResponse>() {
+        Observable<MealsResponse> call = network.getMeals(mealName);
+        /*call.enqueue(new Callback<MealsResponse>() {
             @Override
             public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
                 Log.i("TAG", "onResponse: ddddddd" + response.body().getMealList().size() );
-                networkCallBack.onGetMealSuccessful(response.body().getMealList());
+                List<Meal> mealList=response.body().getMealList();
+                for(Meal meal:mealList)
+                {
+                    meal.setIngredientsList();
+                }
+                networkCallBack.onGetMealSuccessful(mealList);
             }
 
             @Override
             public void onFailure(Call<MealsResponse> call, Throwable t) {
                 networkCallBack.onGetMealFailure(t);
             }
-        });
+        });*/
+        return call.subscribeOn(Schedulers.io()).doOnNext(mealsResponse -> mealsResponse.getMealList().get(0).setIngredientsList());
     }
-    public void getMealsByCategory(String category)
+    public Observable<MealsResponse> getMealsByCategory(String category)
     {
-        Call<MealsResponse> call = network.getMealsByCategory(category);
-        call.enqueue(new Callback<MealsResponse>() {
-            @Override
-            public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
-                Log.i("TAG", "onResponse: get meals by category "+ response.body().getMealList().size());
-                networkCallBack.onGetMealsByCategorySuccessful(response.body().getMealList());
-            }
+        Observable<MealsResponse> call = network.getMealsByCategory(category);
+//        call.enqueue(new Callback<MealsResponse>() {
+//            @Override
+//            public void onResponse(Call<MealsResponse> call, Response<MealsResponse> response) {
+//                Log.i("TAG", "onResponse: get meals by category "+ response.body().getMealList().size());
+//                networkCallBack.onGetMealsByCategorySuccessful(response.body().getMealList());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MealsResponse> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
 
-            @Override
-            public void onFailure(Call<MealsResponse> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        return call.subscribeOn(Schedulers.io());
+    }
+    public Observable<MealsResponse> getMealsByCountry(String country)
+    {
+        Observable<MealsResponse> observable=network.getMealsByCountry(country);
+        return observable.subscribeOn(Schedulers.io());
     }
 }
