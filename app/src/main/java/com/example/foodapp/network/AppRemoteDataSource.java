@@ -149,4 +149,16 @@ public class AppRemoteDataSource {
         Observable<MealsResponse> observable=network.getMealsByCountry(country);
         return observable.subscribeOn(Schedulers.io());
     }
+    public void getAllMeals()
+    {
+         /*we need to get all meals
+         * all we can get now is meals crossponding to countries and categories
+         * we can get all countries and categories
+         * then we can make multiple api calls for each country then one for each category the concatenate them
+         * */
+    }
+    public void getMealsListWithDetails()
+    {
+
+    }
 }
