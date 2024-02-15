@@ -97,51 +97,11 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
             Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment2);
         });
         searchView= (SearchView) view.findViewById(R.id.searchView);
-        search();
+
 
         return view;
     }
-    public void search()
-    {
-        Observable<String> queryObservable= Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
 
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        emitter.onNext(newText);
-                        return false;
-                    }
-                });
-            }
-        }).debounce(1, TimeUnit.SECONDS);
-        queryObservable.subscribe(new Observer<String>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(@NonNull String s) {
-                homePresenter.getSearch(s);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-    }
 
 
     @Override

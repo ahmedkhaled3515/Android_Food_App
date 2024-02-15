@@ -26,28 +26,10 @@ public class HomePresenter {
         getCategories();
         getCountries();
         getRandomMeal();
-        getSearch("en");
+
 
     }
-    public void getSearch(String query)
-    {
-        Observable<String> ingredientsObservable=appRemoteDataSource.getIngredientsList();
-        Observable<String> countriesObservable=appRemoteDataSource.getCountries()
-                .flatMapIterable(foodCountryResponse -> foodCountryResponse.getMeals())
-                .map(foodCountry -> foodCountry.getStrArea());
-        Observable<String> categoriesObservable=appRemoteDataSource.getMealCategories()
-                .flatMapIterable(foodCategoryResponse -> foodCategoryResponse.getList())
-                .map(foodCategory -> foodCategory.getStrCategory());
-      /*  countriesObservable
-                .filter(s -> s.contains(query));
-        categoriesObservable
-                .filter(s -> s.toLowerCase().contains(query));
-        ingredientsObservable.filter(s -> s.contains(query));*/
-        Observable<String> bigObservable= Observable.merge(ingredientsObservable,countriesObservable,categoriesObservable);
-        bigObservable
-                .filter(s -> s.toLowerCase().contains(query))
-                .subscribe(s -> Log.i("TAG", "getSearch: " +s));
-    }
+
     private void getCategories()
     {
         appRemoteDataSource.getMealCategories()
