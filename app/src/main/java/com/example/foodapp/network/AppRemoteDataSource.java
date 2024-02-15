@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.foodapp.model.FoodCategory;
 import com.example.foodapp.model.FoodCategoryResponse;
 import com.example.foodapp.model.FoodCountryResponse;
+import com.example.foodapp.model.IngredientResponse;
 import com.example.foodapp.model.Meal;
 import com.example.foodapp.model.MealsResponse;
 
@@ -106,6 +107,7 @@ public class AppRemoteDataSource {
     }
     public Observable<MealsResponse> getMeals(String mealName)
     {
+
         Observable<MealsResponse> call = network.getMeals(mealName);
         /*call.enqueue(new Callback<MealsResponse>() {
             @Override
@@ -124,7 +126,8 @@ public class AppRemoteDataSource {
                 networkCallBack.onGetMealFailure(t);
             }
         });*/
-        return call.subscribeOn(Schedulers.io()).doOnNext(mealsResponse -> mealsResponse.getMealList().get(0).setIngredientsList());
+        return call.subscribeOn(Schedulers.io())
+                .doOnNext(mealsResponse -> mealsResponse.getMealList().get(0).setIngredientsList());
     }
     public Observable<MealsResponse> getMealsByCategory(String category)
     {
@@ -161,4 +164,16 @@ public class AppRemoteDataSource {
     {
 
     }
+    public Observable<String> getIngredientsList()
+    {
+        Log.d("TAG", "getIngredientsList: hellooooo");
+        Observable<IngredientResponse> call = network.getIngredients();
+        Observable<String> stringObservable = call.subscribeOn(Schedulers.io())
+                .doOnNext(ingredientResponse -> Log.d("TAG", "getIngredientsList: "+ingredientResponse.getIngredientList().size()))
+                .flatMapIterable(ingredientResponse -> ingredientResponse.getIngredientList())
+                .map(ingredient -> ingredient.getStrIngredient());
+
+        return stringObservable;
+    }
+
 }

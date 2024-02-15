@@ -2,6 +2,7 @@ package com.example.foodapp.modules.home.view;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -13,7 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +29,20 @@ import com.example.foodapp.modules.home.presenter.HomePresenter;
 import com.example.foodapp.network.AppRemoteDataSource;
 import com.example.foodapp.network.Network;
 import com.example.foodapp.network.NetworkCallBack;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 
 public class HomeFragment extends Fragment implements HomeInterface,CategoryClickListener,CountryClickListener {
@@ -40,6 +54,7 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
         super.onCreate(savedInstanceState);
 
     }
+    SearchView searchView;
     Bundle bundle;
     View view;
     RecyclerView categoryRecycler;
@@ -48,13 +63,24 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
     CountriesRecyclerAdapter countriesAdapter;
     ImageView dailyImg;
     TextView tvDaily;
+    FirebaseUser user;
+    FirebaseAuth auth;
+    Button btnLogout;
+    HomePresenter homePresenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view =inflater.inflate(R.layout.fragment_home, container, false);
         bundle=new Bundle();
         bundle.putString("name","ahmed");
+        auth=FirebaseAuth.getInstance();
+        user= auth.getCurrentUser();
+        if(user == null)
+        {
+            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment2);
+        }
         // Inflate the layout for this fragment
-        view =inflater.inflate(R.layout.fragment_home, container, false);
+        btnLogout=view.findViewById(R.id.btnLogout);
         categoryRecycler=view.findViewById(R.id.categoryRecycler);
         countryRecycler=view.findViewById(R.id.countryRecycler);
         tvDaily=view.findViewById(R.id.tvDaily);
@@ -65,9 +91,58 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
         LinearLayoutManager countriesLayoutManger=new LinearLayoutManager(this.getContext());
         countriesLayoutManger.setOrientation(RecyclerView.HORIZONTAL);
         countryRecycler.setLayoutManager(countriesLayoutManger);
-        HomePresenter homePresenter=new HomePresenter(this);
+        homePresenter=new HomePresenter(this);
+        btnLogout.setOnClickListener(v -> {
+            auth.signOut();
+            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment2);
+        });
+        searchView= (SearchView) view.findViewById(R.id.searchView);
+        search();
+
         return view;
     }
+    public void search()
+    {
+        Observable<String> queryObservable= Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        emitter.onNext(newText);
+                        return false;
+                    }
+                });
+            }
+        }).debounce(1, TimeUnit.SECONDS);
+        queryObservable.subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull String s) {
+                homePresenter.getSearch(s);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
 
     @Override
     public void onResume() {

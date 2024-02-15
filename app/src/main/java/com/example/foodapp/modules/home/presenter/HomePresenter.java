@@ -1,5 +1,7 @@
 package com.example.foodapp.modules.home.presenter;
 
+import android.util.Log;
+
 import com.example.foodapp.model.FoodCategory;
 import com.example.foodapp.model.FoodCountryResponse;
 import com.example.foodapp.model.Meal;
@@ -8,8 +10,11 @@ import com.example.foodapp.network.AppRemoteDataSource;
 import com.example.foodapp.network.NetworkCallBack;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import retrofit2.http.Query;
 
 public class HomePresenter {
     HomeInterface homeInterface;
@@ -21,7 +26,27 @@ public class HomePresenter {
         getCategories();
         getCountries();
         getRandomMeal();
+        getSearch("en");
 
+    }
+    public void getSearch(String query)
+    {
+        Observable<String> ingredientsObservable=appRemoteDataSource.getIngredientsList();
+        Observable<String> countriesObservable=appRemoteDataSource.getCountries()
+                .flatMapIterable(foodCountryResponse -> foodCountryResponse.getMeals())
+                .map(foodCountry -> foodCountry.getStrArea());
+        Observable<String> categoriesObservable=appRemoteDataSource.getMealCategories()
+                .flatMapIterable(foodCategoryResponse -> foodCategoryResponse.getList())
+                .map(foodCategory -> foodCategory.getStrCategory());
+      /*  countriesObservable
+                .filter(s -> s.contains(query));
+        categoriesObservable
+                .filter(s -> s.toLowerCase().contains(query));
+        ingredientsObservable.filter(s -> s.contains(query));*/
+        Observable<String> bigObservable= Observable.merge(ingredientsObservable,countriesObservable,categoriesObservable);
+        bigObservable
+                .filter(s -> s.toLowerCase().contains(query))
+                .subscribe(s -> Log.i("TAG", "getSearch: " +s));
     }
     private void getCategories()
     {

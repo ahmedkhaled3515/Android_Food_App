@@ -3,6 +3,7 @@ package com.example.foodapp.network;
 import com.example.foodapp.model.FoodCategory;
 import com.example.foodapp.model.FoodCategoryResponse;
 import com.example.foodapp.model.FoodCountryResponse;
+import com.example.foodapp.model.IngredientResponse;
 import com.example.foodapp.model.Meal;
 import com.example.foodapp.model.MealsResponse;
 
@@ -27,4 +28,6 @@ public interface Network {
     public Observable<MealsResponse> getMealsByCategory(@Query("c") String category);
     @GET("filter.php")
     public Observable<MealsResponse> getMealsByCountry(@Query("a") String country);
+    @GET("list.php?i=list")
+    public Observable<IngredientResponse> getIngredients();
 }

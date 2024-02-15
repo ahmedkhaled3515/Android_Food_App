@@ -1,7 +1,14 @@
 package com.example.foodapp.modules.login.view;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -13,14 +20,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodapp.MainActivity;
 import com.example.foodapp.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,18 +49,67 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginFragment extends Fragment {
 
 
-
-    FirebaseAuth mAuth;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
     Button btnLogin;
     TextView tvSignupText;
     EditText etEmail;
     EditText etPassword;
     View view;
+    FirebaseAuth mAuth;
+    GoogleSignInClient googleSignInClient;
+    ImageView googleImg;
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == RESULT_OK)
+            {
+                Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                try{
+                    GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
+                    AuthCredential authCredential=GoogleAuthProvider.getCredential(signInAccount.getIdToken(),null);
+                    mAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Toast.makeText(getContext(), "User logged in successfully", Toast.LENGTH_SHORT).show();
+                                if (signInAccount != null) {
+                                    // Navigate to home fragment
+                                    Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
+                                }
+                            } else {
+                                Toast.makeText(getContext(), "Authentication failed 1.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Authentication failed 2 .", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+            else {
+                Toast.makeText(getContext(), "Authentication failed 3 .", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    });
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser user=mAuth.getCurrentUser();
+        if(user != null)
+        {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,8 +120,19 @@ public class LoginFragment extends Fragment {
         etPassword=view.findViewById(R.id.etPassword);
         btnLogin = view.findViewById(R.id.btnLogin);
         tvSignupText=view.findViewById(R.id.tvSignup);
+        googleImg=view.findViewById(R.id.googleLoginImg);
         tvSignupText.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_signupFragment);
+        });
+        FirebaseApp.initializeApp(getContext());
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.client_id))
+                .requestEmail()
+                .build();
+        GoogleSignIn.getClient(requireActivity(), gso);
+        googleImg.setOnClickListener(v -> {
+            Intent signInIntent = GoogleSignIn.getClient(requireActivity(), gso).getSignInIntent();
+            activityResultLauncher.launch(signInIntent);
         });
         btnLogin.setOnClickListener(v -> {
 //            Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
