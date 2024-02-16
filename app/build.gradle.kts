@@ -51,9 +51,6 @@ dependencies {
     implementation ("androidx.room:room-rxjava3:2.6.1")
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
     implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
-
-    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
-    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
     implementation ("com.airbnb.android:lottie:4.2.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

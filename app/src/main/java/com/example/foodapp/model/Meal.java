@@ -1,9 +1,15 @@
 package com.example.foodapp.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
-
+@Entity(tableName = "favorite_meal")
 public class Meal {
-
+    @PrimaryKey
+    @NonNull
+    String idMeal;
     String strMeal;
     String strDrinkAlternate;
     String strCategory;
