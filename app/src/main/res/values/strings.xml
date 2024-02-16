@@ -71,4 +71,5 @@
     <string name="add_to_favourite_button">Add To Favorite</string>
     <string name="view_button">view</string>
     <string name="logout_button">Log out</string>
+    <string name="no_data_text">No Data Found</string>
 </resources>

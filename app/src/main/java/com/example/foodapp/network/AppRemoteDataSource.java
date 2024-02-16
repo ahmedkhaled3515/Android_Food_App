@@ -175,5 +175,10 @@ public class AppRemoteDataSource {
 
         return stringObservable;
     }
+    public Observable<MealsResponse> getMealsByIngredients(String ingredient)
+    {
+        Observable<MealsResponse> call=network.getMealsByIngredients(ingredient);
+        return call.subscribeOn(Schedulers.io());
+    }
 
 }

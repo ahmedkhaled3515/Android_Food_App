@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.foodapp.R;
 import com.example.foodapp.model.Meal;
@@ -30,6 +31,7 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
     }
     RecyclerView recyclerView;
     MealRecyclerAdapter mealRecyclerAdapter;
+    TextView tvEmpty;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,23 +39,31 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
         bundle= new Bundle();
         String category="";
         String country="";
+        String ingredient="";
         Bundle args = getArguments();
         MealsListPresenter presenter=new MealsListPresenter(this);
         if (args != null) {
 
             category = args.getString("category");
             country = args.getString("country");
-            if(category == null)
+            ingredient=args.getString("ingredient");
+            String type= args.getString("type");
+            if(type.equals("country"))
             {
                 presenter.getMealsByCountry(country);
             }
-            else if(country == null)
+            else if(type.equals("category"))
             {
                 presenter.getMealsByCategory(category);
+            }
+            else if(type.equals("ingredient"))
+            {
+                presenter.getMealsByIngredients(ingredient);
             }
             Log.d("TAG", "onCreateView: hello from meals category "+ category);
         }
         View view =inflater.inflate(R.layout.fragment_category_meals, container, false);
+        tvEmpty=view.findViewById(R.id.tvEmptyView);
         recyclerView = view.findViewById(R.id.mealsRecycler);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -65,9 +75,16 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
 
     @Override
     public void showMeals(List<Meal> mealList) {
-        Log.i("TAG", "showMeals: ddddddddddddddddd");
-        mealRecyclerAdapter= new MealRecyclerAdapter(this.getContext(),this,mealList);
-        recyclerView.setAdapter(mealRecyclerAdapter);
+        if(mealList == null)
+        {
+           tvEmpty.setVisibility(View.VISIBLE);
+        }
+        else {
+            tvEmpty.setVisibility(View.GONE);
+            Log.i("TAG", "showMeals: ddddddddddddddddd");
+            mealRecyclerAdapter = new MealRecyclerAdapter(this.getContext(), this, mealList);
+            recyclerView.setAdapter(mealRecyclerAdapter);
+        }
     }
 
     @Override

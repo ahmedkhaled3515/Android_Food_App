@@ -54,28 +54,91 @@ public class Meal {
     }
 
     public void setIngredientsList() {
-        ingredientsList=new ArrayList<String>();
-        ingredientsList.add(strIngredient1);
-        ingredientsList.add(strIngredient2);
-        ingredientsList.add(strIngredient3);
-        ingredientsList.add(strIngredient4);
-        ingredientsList.add(strIngredient5);
-        ingredientsList.add(strIngredient6);
-        ingredientsList.add(strIngredient7);
-        ingredientsList.add(strIngredient8);
-        ingredientsList.add(strIngredient9);
-        ingredientsList.add(strIngredient10);
-        ingredientsList.add(strIngredient11);
-        ingredientsList.add(strIngredient12);
-        ingredientsList.add(strIngredient13);
-        ingredientsList.add(strIngredient14);
-        ingredientsList.add(strIngredient15);
-        ingredientsList.add(strIngredient16);
-        ingredientsList.add(strIngredient17);
-        ingredientsList.add(strIngredient18);
-        ingredientsList.add(strIngredient19);
-        ingredientsList.add(strIngredient20);
-        ingredientsList.removeIf(ing -> ing.equals(""));
+//        ingredientsList=new ArrayList<String>();
+//        ingredientsList.add(strIngredient1);
+//        ingredientsList.add(strIngredient2);
+//        ingredientsList.add(strIngredient3);
+//        ingredientsList.add(strIngredient4);
+//        ingredientsList.add(strIngredient5);
+//        ingredientsList.add(strIngredient6);
+//        ingredientsList.add(strIngredient7);
+//        ingredientsList.add(strIngredient8);
+//        ingredientsList.add(strIngredient9);
+//        ingredientsList.add(strIngredient10);
+//        ingredientsList.add(strIngredient11);
+//        ingredientsList.add(strIngredient12);
+//        ingredientsList.add(strIngredient13);
+//        ingredientsList.add(strIngredient14);
+//        ingredientsList.add(strIngredient15);
+//        ingredientsList.add(strIngredient16);
+//        ingredientsList.add(strIngredient17);
+//        ingredientsList.add(strIngredient18);
+//        ingredientsList.add(strIngredient19);
+//        ingredientsList.add(strIngredient20);
+//        ingredientsList.removeIf(ing -> ing.equals(""));
+        ingredientsList = new ArrayList<String>();
+
+        // Add non-null ingredients to the list
+        if (strIngredient1 != null && !strIngredient1.isEmpty()) {
+            ingredientsList.add(strIngredient1);
+        }
+        if (strIngredient2 != null && !strIngredient2.isEmpty()) {
+            ingredientsList.add(strIngredient2);
+        }
+        if (strIngredient3 != null && !strIngredient3.isEmpty()) {
+            ingredientsList.add(strIngredient3);
+        }
+        if (strIngredient4 != null && !strIngredient4.isEmpty()) {
+            ingredientsList.add(strIngredient4);
+        }
+        if (strIngredient5 != null && !strIngredient5.isEmpty()) {
+            ingredientsList.add(strIngredient5);
+        }
+        if (strIngredient6 != null && !strIngredient6.isEmpty()) {
+            ingredientsList.add(strIngredient6);
+        }
+        if (strIngredient7 != null && !strIngredient7.isEmpty()) {
+            ingredientsList.add(strIngredient7);
+        }
+        if (strIngredient8 != null && !strIngredient8.isEmpty()) {
+            ingredientsList.add(strIngredient8);
+        }
+        if (strIngredient9 != null && !strIngredient9.isEmpty()) {
+            ingredientsList.add(strIngredient9);
+        }
+        if (strIngredient10 != null && !strIngredient10.isEmpty()) {
+            ingredientsList.add(strIngredient10);
+        }
+        if (strIngredient11 != null && !strIngredient11.isEmpty()) {
+            ingredientsList.add(strIngredient11);
+        }
+        if (strIngredient12 != null && !strIngredient12.isEmpty()) {
+            ingredientsList.add(strIngredient12);
+        }
+        if (strIngredient13 != null && !strIngredient13.isEmpty()) {
+            ingredientsList.add(strIngredient13);
+        }
+        if (strIngredient14 != null && !strIngredient14.isEmpty()) {
+            ingredientsList.add(strIngredient14);
+        }
+        if (strIngredient15 != null && !strIngredient15.isEmpty()) {
+            ingredientsList.add(strIngredient15);
+        }
+        if (strIngredient16 != null && !strIngredient16.isEmpty()) {
+            ingredientsList.add(strIngredient16);
+        }
+        if (strIngredient17 != null && !strIngredient17.isEmpty()) {
+            ingredientsList.add(strIngredient17);
+        }
+        if (strIngredient18 != null && !strIngredient18.isEmpty()) {
+            ingredientsList.add(strIngredient18);
+        }
+        if (strIngredient19 != null && !strIngredient19.isEmpty()) {
+            ingredientsList.add(strIngredient19);
+        }
+        if (strIngredient20 != null && !strIngredient20.isEmpty()) {
+            ingredientsList.add(strIngredient20);
+        }
     }
 
     public String getStrMeal() {

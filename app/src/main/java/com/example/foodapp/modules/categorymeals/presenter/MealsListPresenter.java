@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.foodapp.model.FoodCategory;
 import com.example.foodapp.model.FoodCountryResponse;
 import com.example.foodapp.model.Meal;
+import com.example.foodapp.model.MealsResponse;
 import com.example.foodapp.modules.categorymeals.view.MealsListInterface;
 import com.example.foodapp.network.AppRemoteDataSource;
 import com.example.foodapp.network.NetworkCallBack;
@@ -12,14 +13,53 @@ import com.example.foodapp.network.NetworkCallBack;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class MealsListPresenter{
     MealsListInterface mealsListInterface;
     AppRemoteDataSource appRemoteDataSource;
+
     public MealsListPresenter(MealsListInterface mealsListInterface)
     {
         this.mealsListInterface = mealsListInterface;
         appRemoteDataSource=AppRemoteDataSource.getInstance();
+    }
+    public void getMealsByIngredients(String ingredient)
+    {
+        Log.d("TAG", "getMealsByIngredients: "+ingredient);
+//        appRemoteDataSource.getMealsByIngredients(ingredient)
+//                .doOnNext(mealsResponse -> Log.d("TAG", "getMealsByIngredients: "+mealsResponse.getMealList()))
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(mealsResponse -> {
+//                    mealsListInterface.showMeals(mealsResponse.getMealList());
+//                }
+//                );
+        appRemoteDataSource.getMealsByIngredients(ingredient)
+                .doOnNext(mealsResponse -> Log.d("TAG", "getMealsByIngredients: "+mealsResponse.getMealList()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MealsResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull MealsResponse mealsResponse) {
+                        mealsListInterface.showMeals(mealsResponse.getMealList());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
     public void getMealsByCategory(String category)
     {

@@ -72,7 +72,6 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
                              Bundle savedInstanceState) {
         view =inflater.inflate(R.layout.fragment_home, container, false);
         bundle=new Bundle();
-        bundle.putString("name","ahmed");
         auth=FirebaseAuth.getInstance();
         user= auth.getCurrentUser();
         if(user == null)
@@ -158,11 +157,13 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
 
     @Override
     public void onCardClickListener(String category) {
+        bundle.putString("type","category");
         bundle.putString("category",category);
         NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_homeFragment_to_categoryMealsFragment,bundle);    }
 
     @Override
     public void onCountryClickListener(String country) {
+        bundle.putString("type","country");
         bundle.putString("country",country);
         NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_homeFragment_to_categoryMealsFragment,bundle);    }
 }

@@ -75,5 +75,12 @@
         android:id="@+id/searchFragment"
         android:name="com.example.foodapp.modules.searchall.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_categoryMealsFragment"
+            app:destination="@id/categoryMealsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
+    </fragment>
 </navigation>

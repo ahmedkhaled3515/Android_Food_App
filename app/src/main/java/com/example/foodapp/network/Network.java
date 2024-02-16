@@ -30,4 +30,6 @@ public interface Network {
     public Observable<MealsResponse> getMealsByCountry(@Query("a") String country);
     @GET("list.php?i=list")
     public Observable<IngredientResponse> getIngredients();
+    @GET("filter.php")
+    public Observable<MealsResponse> getMealsByIngredients(@Query("i") String ingredient);
 }

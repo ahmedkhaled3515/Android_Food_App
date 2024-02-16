@@ -11,16 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapp.R;
+import com.example.foodapp.model.SearchResult;
 
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder> {
     Context context;
-    List<String> stringList;
-    public SearchRecyclerAdapter(Context context,List<String> stringList)
+    List<SearchResult> searchList;
+    OnSearchClickListener onSearchClickListener;
+    public SearchRecyclerAdapter(Context context,OnSearchClickListener onSearchClickListener,List<SearchResult> stringList)
     {
+        this.onSearchClickListener=onSearchClickListener;
         this.context=context;
-        this.stringList=stringList;
+        this.searchList=stringList;
     }
     @NonNull
     @Override
@@ -33,12 +36,15 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull SearchRecyclerAdapter.ViewHolder holder, int position) {
-        holder.tvResult.setText(stringList.get(position));
+        holder.tvResult.setText(searchList.get(position).getResult());
+        holder.itemView.setOnClickListener(v -> {
+            onSearchClickListener.onSearchClick(searchList.get(position));
+        });
     }
 
     @Override
     public int getItemCount() {
-        return stringList.size();
+        return searchList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

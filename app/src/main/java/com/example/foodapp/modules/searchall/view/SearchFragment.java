@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.example.foodapp.R;
+import com.example.foodapp.model.SearchResult;
 import com.example.foodapp.modules.searchall.presenter.SearchPresenter;
 
 import java.util.List;
@@ -26,7 +28,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 
-public class SearchFragment extends Fragment implements SearchInterface{
+public class SearchFragment extends Fragment implements SearchInterface,OnSearchClickListener{
 
 
 
@@ -98,9 +100,39 @@ public class SearchFragment extends Fragment implements SearchInterface{
     }
 
     @Override
-    public void showResult(List<String> resultsList) {
-        adapter=new SearchRecyclerAdapter(this.getContext(),resultsList);
+    public void showResult(List<SearchResult> resultsList) {
+        adapter=new SearchRecyclerAdapter(this.getContext(),this,resultsList);
         searchRecycler.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSearchClick(SearchResult searchResult) {
+        Bundle bundle=new Bundle();
+        if(searchResult.getType().equals("country"))
+        {
+            bundle.putString("type","country");
+            bundle.putString("country", searchResult.getResult());
+            Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_categoryMealsFragment,bundle);
+
+        }
+        else if(searchResult.getType().equals("category"))
+        {
+            bundle.putString("type","category");
+            bundle.putString("category", searchResult.getResult());
+            Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_categoryMealsFragment,bundle);
+
+        }
+        else if (searchResult.getType().equals("ingredient")) {
+            bundle.putString("type","ingredient");
+            bundle.putString("ingredient", searchResult.getResult());
+            Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_categoryMealsFragment,bundle);
+        }
+        else if (searchResult.getType().equals("meal"))
+        {
+            bundle.putString("meal", searchResult.getResult());
+            Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_mealFragment,bundle);
+        }
+
     }
 }
