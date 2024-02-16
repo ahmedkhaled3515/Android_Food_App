@@ -1,14 +1,18 @@
 package com.example.foodapp.modules.categorymeals.presenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.foodapp.model.FoodCategory;
 import com.example.foodapp.model.FoodCountryResponse;
 import com.example.foodapp.model.Meal;
 import com.example.foodapp.model.MealsResponse;
+import com.example.foodapp.model.database.MealLocalDataSourceImpl;
 import com.example.foodapp.modules.categorymeals.view.MealsListInterface;
 import com.example.foodapp.network.AppRemoteDataSource;
 import com.example.foodapp.network.NetworkCallBack;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -20,12 +24,25 @@ import io.reactivex.rxjava3.disposables.Disposable;
 public class MealsListPresenter{
     MealsListInterface mealsListInterface;
     AppRemoteDataSource appRemoteDataSource;
+    MealLocalDataSourceImpl mealLocalDataSource;
 
-    public MealsListPresenter(MealsListInterface mealsListInterface)
+    public MealsListPresenter(Context context,MealsListInterface mealsListInterface)
     {
         this.mealsListInterface = mealsListInterface;
         appRemoteDataSource=AppRemoteDataSource.getInstance();
+        mealLocalDataSource=MealLocalDataSourceImpl.getInstance(context);
+
     }
+    public void addMealToFav(Meal meal)
+    {
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        {
+            meal.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            mealLocalDataSource.insert(meal);
+        }
+    }
+
+
     public void getMealsByIngredients(String ingredient)
     {
         Log.d("TAG", "getMealsByIngredients: "+ingredient);

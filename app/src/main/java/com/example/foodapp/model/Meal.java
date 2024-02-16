@@ -2,6 +2,7 @@ package com.example.foodapp.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class Meal {
     @PrimaryKey
     @NonNull
     String idMeal;
+    String email;
     String strMeal;
     String strDrinkAlternate;
     String strCategory;
@@ -38,6 +40,7 @@ public class Meal {
     String strIngredient18;
     String strIngredient19;
     String strIngredient20;
+    @Ignore
     ArrayList<String> ingredientsList ;
     String strMeasure1;
     String strMeasure2;
@@ -161,6 +164,27 @@ public class Meal {
 
     public void setStrDrinkAlternate(String strDrinkAlternate) {
         this.strDrinkAlternate = strDrinkAlternate;
+    }
+
+    @NonNull
+    public String getIdMeal() {
+        return idMeal;
+    }
+
+    public void setIdMeal(@NonNull String idMeal) {
+        this.idMeal = idMeal;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setIngredientsList(ArrayList<String> ingredientsList) {
+        this.ingredientsList = ingredientsList;
     }
 
     public String getStrCategory() {

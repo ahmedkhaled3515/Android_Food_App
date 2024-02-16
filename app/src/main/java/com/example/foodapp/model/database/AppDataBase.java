@@ -11,11 +11,8 @@ import com.example.foodapp.model.Meal;
 @Database(entities = {Meal.class},version = 1)
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase instance=null;
-
-    private AppDataBase(){
-
-    }
-    public AppDataBase getInstance(Context context)
+    public abstract MealDAO getMealDAO();
+    public static AppDataBase getInstance(Context context)
     {
         if(instance == null)
         {

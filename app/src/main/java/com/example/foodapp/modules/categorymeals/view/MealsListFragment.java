@@ -32,6 +32,7 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
     RecyclerView recyclerView;
     MealRecyclerAdapter mealRecyclerAdapter;
     TextView tvEmpty;
+    MealsListPresenter presenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
         String country="";
         String ingredient="";
         Bundle args = getArguments();
-        MealsListPresenter presenter=new MealsListPresenter(this);
+        presenter=new MealsListPresenter(this.getContext(),this);
         if (args != null) {
 
             category = args.getString("category");
@@ -100,6 +101,6 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
 
     @Override
     public void onFavoriteClickListener(Meal clickedMeal) {
-
+        presenter.addMealToFav(clickedMeal);
     }
 }

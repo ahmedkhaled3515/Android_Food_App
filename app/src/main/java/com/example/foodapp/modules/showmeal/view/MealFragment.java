@@ -27,9 +27,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.foodapp.R;
 import com.example.foodapp.model.Meal;
 import com.example.foodapp.modules.showmeal.presenter.MealPresenter;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
