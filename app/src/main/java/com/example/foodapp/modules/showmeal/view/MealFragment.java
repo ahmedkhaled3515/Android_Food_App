@@ -1,33 +1,39 @@
 package com.example.foodapp.modules.showmeal.view;
 
+import android.app.DatePickerDialog;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MediaController;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.foodapp.R;
 import com.example.foodapp.model.Meal;
+import com.example.foodapp.model.Plan;
 import com.example.foodapp.modules.showmeal.presenter.MealPresenter;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.sql.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +50,9 @@ public class MealFragment extends Fragment implements MealInterface {
     View view;
     RecyclerView recyclerView;
     IngerdientsRecyclerAdapter ingredientsAdapter;
+    Button btnAddToFavorite;
+    Button btnAddToPlan;
+    MealPresenter presenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +68,10 @@ public class MealFragment extends Fragment implements MealInterface {
         Bundle arg=getArguments();
         if(arg !=null) {
             String mealName=arg.getString("meal");
-            MealPresenter presenter = new MealPresenter(this,mealName);
+            presenter = new MealPresenter(this.getContext(),this,mealName);
         }
+        btnAddToFavorite=view.findViewById(R.id.btnAddFav);
+        btnAddToPlan=view.findViewById(R.id.btnAddToPlan);
         mealImg = view.findViewById(R.id.mealImgMealFragment);
         tvMealName = view.findViewById(R.id.mealNameMealFragment);
         tvMealCategory = view.findViewById(R.id.mealCategoryMealFragment);
@@ -90,6 +101,51 @@ public class MealFragment extends Fragment implements MealInterface {
         setMealVideo(meal.getStrYoutube());
         ingredientsAdapter=new IngerdientsRecyclerAdapter(this.getContext(),meal.getIngredientsList());
         recyclerView.setAdapter(ingredientsAdapter);
+        btnAddToPlan.setOnClickListener(v -> showPlanPopUp(meal));
+    }
+    Date date = null;
+    private void showPlanPopUp(Meal meal)
+    {
+        View popupView = getLayoutInflater().inflate(R.layout.plan_popup,null);
+        Button btnPickDate=popupView.findViewById(R.id.btnPickDate);
+        Button btnConfirm=popupView.findViewById(R.id.btnDateConfirm);
+        EditText etDate=popupView.findViewById(R.id.etDate);
+
+        btnPickDate.setOnClickListener(v -> {
+            Calendar calendar= Calendar.getInstance();
+            DatePickerDialog dialog=new DatePickerDialog(this.getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    Log.d("TAG", "onDateSet: " + month);
+                    etDate.setText(String.valueOf(year)+"/"+String.valueOf((Calendar.MONTH+month)-1)+"/"+String.valueOf(dayOfMonth));
+                    date=new Date(year-1900,(Calendar.MONTH+month)-2,dayOfMonth);
+                    Log.d("TAG", "showPlanPopUp: "+ date);
+                }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            dialog.show();
+        });
+        btnConfirm.setOnClickListener(v -> {
+            if(date !=null) {
+                Log.d("TAG", "showPlanPopUp2 : " + date);
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                Plan plan = new Plan(meal.getIdMeal(), email, meal.getStrMeal(), meal.getStrMealThumb(), date);
+                presenter.addToPlan(plan);
+            }
+            else {
+                Toast.makeText(this.getContext(),"Date can't be empty",Toast.LENGTH_SHORT).show();
+            }
+        });
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        int popupWidth = (int) (screenWidth * 0.85); // 75% of screen width
+        int popupHeight = (int) (screenHeight * 0.50); // 75% of screen height
+
+        // Create PopupWindow with calculated dimensions
+        PopupWindow popupWindow = new PopupWindow(popupView, popupWidth, popupHeight, true);
+        popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, -200);
     }
     public static String convertToEmbeddedUrl(String youtubeUrl) {
         String videoId = extractVideoId(youtubeUrl);

@@ -20,6 +20,13 @@
         android:title="Search"
         android:icon="@drawable/baseline_search_24"/>
     <item
+        android:id="@+id/planFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Plans"
+        android:icon="@drawable/list1_24"/>
+
+    <item
         android:id="@+id/optionsFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,8 +1,12 @@
 package com.example.foodapp.modules.showmeal.presenter;
 
+import android.content.Context;
+
 import com.example.foodapp.model.FoodCategory;
 import com.example.foodapp.model.FoodCountryResponse;
 import com.example.foodapp.model.Meal;
+import com.example.foodapp.model.Plan;
+import com.example.foodapp.model.database.MealLocalDataSourceImpl;
 import com.example.foodapp.modules.showmeal.view.MealInterface;
 import com.example.foodapp.network.AppRemoteDataSource;
 import com.example.foodapp.network.NetworkCallBack;
@@ -13,16 +17,21 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 public class MealPresenter{
     MealInterface mealInterface;
-    public MealPresenter(MealInterface mealInterface,String mealName)
+    MealLocalDataSourceImpl mealLocalDataSource;
+    public MealPresenter(Context context,MealInterface mealInterface, String mealName)
     {
         this.mealInterface=mealInterface;
         AppRemoteDataSource appRemoteDataSource= AppRemoteDataSource.getInstance();
+        mealLocalDataSource = MealLocalDataSourceImpl.getInstance(context);
         appRemoteDataSource.getMeals(mealName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mealsResponse -> {
                     mealInterface.showMealDetails(mealsResponse.getMealList().get(0));
                 });
-
+    }
+    public void addToPlan(Plan plan)
+    {
+        mealLocalDataSource.addToPlan(plan);
     }
     /*@Override
     public void onGetCategoriesSuccess(List<FoodCategory> categoryList) {

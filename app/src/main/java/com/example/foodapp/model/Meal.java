@@ -6,6 +6,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 @Entity(tableName = "favorite_meal",primaryKeys = {"idMeal","email"} )
 public class Meal {
     @NonNull
@@ -15,6 +17,7 @@ public class Meal {
     String strMeal;
     String strDrinkAlternate;
     String strCategory;
+
     String strArea;
     String strInstructions;
     String strMealThumb;

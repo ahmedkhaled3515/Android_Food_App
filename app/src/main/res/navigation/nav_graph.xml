@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/planFragment">
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.foodapp.modules.signup.view.SignupFragment"
@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_categoryMealsFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_categoryMealsFragment_to_planFragment"
+            app:destination="@id/planFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealFragment"
@@ -87,4 +90,8 @@
             android:id="@+id/action_searchFragment_to_mealFragment"
             app:destination="@id/mealFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.foodapp.modules.plan.view.PlanFragment"
+        android:label="PlanFragment" />
 </navigation>
