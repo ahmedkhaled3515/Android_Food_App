@@ -6,11 +6,11 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
-@Entity(tableName = "favorite_meal")
+@Entity(tableName = "favorite_meal",primaryKeys = {"idMeal","email"} )
 public class Meal {
-    @PrimaryKey
     @NonNull
     String idMeal;
+    @NonNull
     String email;
     String strMeal;
     String strDrinkAlternate;

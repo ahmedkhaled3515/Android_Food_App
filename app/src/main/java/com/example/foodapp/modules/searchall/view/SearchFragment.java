@@ -75,7 +75,7 @@ public class SearchFragment extends Fragment implements SearchInterface,OnSearch
                     }
                 });
             }
-        }).debounce(1, TimeUnit.SECONDS);
+        }).debounce(200, TimeUnit.MILLISECONDS);
         queryObservable.subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -84,7 +84,7 @@ public class SearchFragment extends Fragment implements SearchInterface,OnSearch
 
             @Override
             public void onNext(@NonNull String s) {
-                searchPresenter.getSearch(s);
+                searchPresenter.getSearch(s.toLowerCase());
             }
 
             @Override

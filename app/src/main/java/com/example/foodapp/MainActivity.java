@@ -28,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                if(navDestination.getId() != R.id.homeFragment || navDestination.getId()!=R.id.favoriteFragment || navDestination.getId() != R.id.optionsFragment)
+                if(navDestination.getId() != R.id.homeFragment || navDestination.getId()!=R.id.favoriteFragment || navDestination.getId() != R.id.optionsFragment || navDestination.getId() != R.id.searchFragment)
                 {
-                    navBar.setActivated(false);
-                    navBar.setEnabled(false);
-                    navBar.setVisibility(View.GONE);
+//                    navBar.setActivated(false);
+//                    navBar.setEnabled(false);
+                    navBar.setVisibility(View.VISIBLE);
                 }
                 else {
-                    navBar.setActivated(true);
-                    navBar.setEnabled(true);
-                    navBar.setVisibility(View.VISIBLE);
+//                    navBar.setActivated(true);
+//                    navBar.setEnabled(true);
+                    navBar.setVisibility(View.GONE);
                 }
 
             }
