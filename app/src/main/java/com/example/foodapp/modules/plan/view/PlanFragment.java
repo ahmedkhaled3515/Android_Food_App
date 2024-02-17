@@ -3,6 +3,7 @@ package com.example.foodapp.modules.plan.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,11 +64,14 @@ public class PlanFragment extends Fragment implements PlanInterface ,OnPlanClick
 
     @Override
     public void onRemoveClick(Plan plan) {
-
+        planPresenter.removePlan(plan);
     }
 
     @Override
-    public void onViewClick(String MealName) {
-
+    public void onViewClick(String mealName) {
+        Bundle bundle=new Bundle();
+        bundle.putString("type","meal");
+        bundle.putString("meal",mealName);
+        Navigation.findNavController(view).navigate(R.id.action_planFragment_to_mealFragment,bundle);
     }
 }

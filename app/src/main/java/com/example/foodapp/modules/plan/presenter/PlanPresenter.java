@@ -2,6 +2,7 @@ package com.example.foodapp.modules.plan.presenter;
 
 import android.content.Context;
 
+import com.example.foodapp.model.Plan;
 import com.example.foodapp.model.database.MealLocalDataSourceImpl;
 import com.example.foodapp.modules.plan.view.PlanInterface;
 
@@ -14,6 +15,10 @@ public class PlanPresenter {
         mealLocalDataSource = MealLocalDataSourceImpl.getInstance(context);
         this.planInterface=planInterface;
         getAllPlans();
+    }
+    public void removePlan(Plan plan)
+    {
+        mealLocalDataSource.removeFromPlan(plan);
     }
     public void getAllPlans()
     {
