@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodapp.R;
 import com.example.foodapp.model.Meal;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -44,6 +45,10 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         holder.btnView.setOnClickListener(v -> {
             clickListener.onViewClickListener(mealList.get(position));
         });
+        if(FirebaseAuth.getInstance().getCurrentUser() == null)
+        {
+            holder.btnFavourite.setVisibility(View.GONE);
+        }
         holder.btnFavourite.setOnClickListener(v -> {
             clickListener.onFavoriteClickListener(mealList.get(position));
         });

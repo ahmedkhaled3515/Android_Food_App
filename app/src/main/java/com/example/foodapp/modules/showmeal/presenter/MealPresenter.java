@@ -33,6 +33,10 @@ public class MealPresenter{
     {
         mealLocalDataSource.addToPlan(plan);
     }
+    public void addToFav(Meal meal)
+    {
+        mealLocalDataSource.insert(meal);
+    }
     /*@Override
     public void onGetCategoriesSuccess(List<FoodCategory> categoryList) {
 

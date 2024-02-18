@@ -1,6 +1,8 @@
 package com.example.foodapp.modules.favorite.view;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,12 +44,21 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
         Glide.with(context)
                 .load(mealList.get(position).getStrMealThumb())
                 .into(holder.imageView);
+        if(!isNetworkAvailable(context))
+        {
+            holder.btnView.setVisibility(View.GONE);
+        }
         holder.btnView.setOnClickListener(v -> {
             onFavoriteClickListener.onViewClick(mealList.get(position));
         });
         holder.btnRemove.setOnClickListener(v -> {
             onFavoriteClickListener.onRemoveClick(mealList.get(position));
         });
+    }
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override

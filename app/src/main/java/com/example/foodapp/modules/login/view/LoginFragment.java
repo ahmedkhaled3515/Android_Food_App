@@ -2,7 +2,11 @@ package com.example.foodapp.modules.login.view;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -57,6 +61,7 @@ public class LoginFragment extends Fragment {
     FirebaseAuth mAuth;
     GoogleSignInClient googleSignInClient;
     ImageView googleImg;
+    TextView tvGuest;
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -73,6 +78,13 @@ public class LoginFragment extends Fragment {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Toast.makeText(getContext(), "User logged in successfully", Toast.LENGTH_SHORT).show();
                                 if (signInAccount != null) {
+                                    SharedPreferences sharedPreferences= getActivity().getSharedPreferences(MainActivity.SHARED_PREF_NAME,Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor= sharedPreferences.edit();
+                                    editor.putBoolean(MainActivity.IS_LOGGED_FLAG,true);
+                                    editor.putBoolean(MainActivity.IS_LOGGED_FLAG,true);
+                                    Log.d("TAG", "onComplete: google "+task.getResult().getUser().getEmail());
+                                    editor.putString(MainActivity.LOGGED_EMAIL,task.getResult().getUser().getEmail());
+                                    editor.apply();
                                     // Navigate to home fragment
                                     Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
                                 }
@@ -97,10 +109,20 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser user=mAuth.getCurrentUser();
-        if(user != null)
-        {
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
+        if(isNetworkAvailable(this.getContext())) {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
+            }
+        }
+        else {
+            Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences= getActivity().getSharedPreferences(MainActivity.SHARED_PREF_NAME,Context.MODE_PRIVATE);
+            boolean isLogged= sharedPreferences.getBoolean(MainActivity.IS_LOGGED_FLAG,false);
+            if(isLogged)
+            {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_favoriteFragment);
+            }
         }
     }
 
@@ -141,7 +163,24 @@ public class LoginFragment extends Fragment {
                 firebaseLogin(String.valueOf(etEmail.getText()),String.valueOf(etPassword.getText()));
             }
         });
+        tvGuest=view.findViewById(R.id.tvGuest);
+        if(isNetworkAvailable(getContext()))
+        {
+
+            tvGuest.setOnClickListener(v -> {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
+            });
+        }
+        else {
+            tvGuest.setAlpha(0.5f);
+        }
+
         return view;
+    }
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
     private boolean checkSyntax()
     {
@@ -173,6 +212,12 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            SharedPreferences sharedPreferences= getActivity().getSharedPreferences(MainActivity.SHARED_PREF_NAME,Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor= sharedPreferences.edit();
+                            editor.putBoolean(MainActivity.IS_LOGGED_FLAG,true);
+                            Log.d("TAG", "onComplete: "+task.getResult().getUser().getEmail());
+                            editor.putString(MainActivity.LOGGED_EMAIL,task.getResult().getUser().getEmail());
+                            editor.apply();
                             Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_homeFragment);
                         } else {
                             // If sign in fails, display a message to the user.

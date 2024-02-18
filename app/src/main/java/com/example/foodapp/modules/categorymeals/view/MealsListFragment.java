@@ -33,6 +33,7 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
     MealRecyclerAdapter mealRecyclerAdapter;
     TextView tvEmpty;
     MealsListPresenter presenter;
+    TextView tvTotal;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
             Log.d("TAG", "onCreateView: hello from meals category "+ category);
         }
         View view =inflater.inflate(R.layout.fragment_category_meals, container, false);
+        tvTotal=view.findViewById(R.id.tvListTotal);
         tvEmpty=view.findViewById(R.id.tvEmptyView);
         recyclerView = view.findViewById(R.id.mealsRecycler);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getContext());
@@ -81,6 +83,7 @@ public class MealsListFragment extends Fragment implements MealsListInterface, M
            tvEmpty.setVisibility(View.VISIBLE);
         }
         else {
+            tvTotal.setText("Total "+mealList.size()+" items");
             tvEmpty.setVisibility(View.GONE);
             Log.i("TAG", "showMeals: ddddddddddddddddd");
             mealRecyclerAdapter = new MealRecyclerAdapter(this.getContext(), this, mealList);

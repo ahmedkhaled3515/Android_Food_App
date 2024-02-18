@@ -1,5 +1,7 @@
 package com.example.foodapp.modules.plan.view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.foodapp.MainActivity;
 import com.example.foodapp.R;
 import com.example.foodapp.model.Plan;
 import com.example.foodapp.modules.plan.presenter.PlanPresenter;
@@ -31,6 +35,7 @@ public class PlanFragment extends Fragment implements PlanInterface ,OnPlanClick
     RecyclerView recyclerView;
     PlanRecyclerAdapter planAdapter;
     PlanPresenter planPresenter;
+    String email;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,26 +45,40 @@ public class PlanFragment extends Fragment implements PlanInterface ,OnPlanClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_plan, container, false);
-        recyclerView=view.findViewById(R.id.planRecycler);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getContext());
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        planPresenter=new PlanPresenter(this.getContext(),this);
+        SharedPreferences sharedPreferences= getActivity().getSharedPreferences(MainActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        boolean isLogged = sharedPreferences.getBoolean(MainActivity.IS_LOGGED_FLAG,false);
+        email=sharedPreferences.getString(MainActivity.LOGGED_EMAIL,null);
+        if(FirebaseAuth.getInstance().getCurrentUser()==null && !isLogged)
+        {
+            view=inflater.inflate(R.layout.no_access_layout,container,false);
+            Button btnGoSignIn=view.findViewById(R.id.btnSignInPage);
+            btnGoSignIn.setOnClickListener(v -> {
+                Navigation.findNavController(view).navigate(R.id.loginFragment2);
+            });
+        }
+        else {
+            view = inflater.inflate(R.layout.fragment_plan, container, false);
+            recyclerView = view.findViewById(R.id.planRecycler);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+            linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            planPresenter = new PlanPresenter(this.getContext(), this);
+        }
         return view;
     }
 
     @Override
     public void showPlans(Flowable<List<Plan>> plan) {
-        String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        plan.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(planList -> {
-                    Log.d("TAG", "showPlans: " +planList);
-                    planList.removeIf(plan1 -> !plan1.getEmail().equals(email));
-                    planAdapter=new PlanRecyclerAdapter(this.getContext(),this,planList);
-                    recyclerView.setAdapter(planAdapter);
-                });
+        if(FirebaseAuth.getInstance().getCurrentUser().getEmail()!=null) {
+            plan.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(planList -> {
+                        Log.d("TAG", "showPlans: " + planList);
+                        planList.removeIf(plan1 -> !plan1.getEmail().equals(email));
+                        planAdapter = new PlanRecyclerAdapter(this.getContext(), this, planList);
+                        recyclerView.setAdapter(planAdapter);
+                    });
+        }
     }
 
     @Override

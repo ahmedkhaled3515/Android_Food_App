@@ -86,9 +86,18 @@ public class MealFragment extends Fragment implements MealInterface {
 
         return view;
     }
-
+    String email = null;
     @Override
     public void showMealDetails(Meal meal) {
+
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+        {
+            email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        }
+        else {
+            btnAddToPlan.setVisibility(View.GONE);
+            btnAddToFavorite.setVisibility(View.GONE);
+        }
 
         Glide.with(this)
                 .load(meal.getStrMealThumb())
@@ -101,7 +110,29 @@ public class MealFragment extends Fragment implements MealInterface {
         setMealVideo(meal.getStrYoutube());
         ingredientsAdapter=new IngerdientsRecyclerAdapter(this.getContext(),meal.getIngredientsList());
         recyclerView.setAdapter(ingredientsAdapter);
-        btnAddToPlan.setOnClickListener(v -> showPlanPopUp(meal));
+        btnAddToPlan.setOnClickListener(v -> {
+//            showPlanPopUp(meal)
+            Calendar calendar= Calendar.getInstance();
+            DatePickerDialog dialog=new DatePickerDialog(this.getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    Log.d("TAG", "onDateSet: " + month);
+//                    etDate.setText(String.valueOf(year)+"/"+String.valueOf((Calendar.MONTH+month)-1)+"/"+String.valueOf(dayOfMonth));
+                    date=new Date(year-1900,(Calendar.MONTH+month)-2,dayOfMonth);
+                    Log.d("TAG", "showPlanPopUp: "+ date);
+
+                    Plan plan = new Plan(meal.getIdMeal(), email, meal.getStrMeal(), meal.getStrMealThumb(), date);
+                    presenter.addToPlan(plan);
+                }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            dialog.show();
+
+        });
+        btnAddToFavorite.setOnClickListener(v -> {
+            Log.d("TAG", "showMealDetails: "+meal);
+            meal.setEmail(email);
+            presenter.addToFav(meal);
+        });
     }
     Date date = null;
     private void showPlanPopUp(Meal meal)

@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
     TextView tvDaily;
     FirebaseUser user;
     FirebaseAuth auth;
-    Button btnLogout;
     HomePresenter homePresenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,12 +73,12 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
         bundle=new Bundle();
         auth=FirebaseAuth.getInstance();
         user= auth.getCurrentUser();
-        if(user == null)
-        {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment2);
-        }
+//        if(user == null)
+//        {
+//            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment2);
+//        }
         // Inflate the layout for this fragment
-        btnLogout=view.findViewById(R.id.btnLogout);
+
         categoryRecycler=view.findViewById(R.id.categoryRecycler);
         countryRecycler=view.findViewById(R.id.countryRecycler);
         tvDaily=view.findViewById(R.id.tvDaily);
@@ -91,10 +90,6 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
         countriesLayoutManger.setOrientation(RecyclerView.HORIZONTAL);
         countryRecycler.setLayoutManager(countriesLayoutManger);
         homePresenter=new HomePresenter(this);
-        btnLogout.setOnClickListener(v -> {
-            auth.signOut();
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_loginFragment2);
-        });
         searchView= (SearchView) view.findViewById(R.id.searchView);
 
 

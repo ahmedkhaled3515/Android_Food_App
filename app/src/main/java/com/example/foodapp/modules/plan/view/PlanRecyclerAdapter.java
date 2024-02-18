@@ -1,6 +1,8 @@
 package com.example.foodapp.modules.plan.view;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +50,19 @@ public class PlanRecyclerAdapter extends RecyclerView.Adapter<PlanRecyclerAdapte
             onPlanClickListener.onRemoveClick(planList.get(position));
         });
         holder.dateText.setText(String.valueOf(planList.get(position).getDate()));
+        if(!isNetworkAvailable(context))
+        {
+            holder.btnView.setVisibility(View.GONE);
+        }
         holder.btnView.setOnClickListener(v -> {
             onPlanClickListener.onViewClick(planList.get(position).getStrMeal());
         });
     }
-
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     @Override
     public int getItemCount() {
         return planList.size();
