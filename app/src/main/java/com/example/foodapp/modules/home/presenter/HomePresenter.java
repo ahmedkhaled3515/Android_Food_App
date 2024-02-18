@@ -30,6 +30,7 @@ public class HomePresenter {
 
     }
 
+
     private void getCategories()
     {
         appRemoteDataSource.getMealCategories()

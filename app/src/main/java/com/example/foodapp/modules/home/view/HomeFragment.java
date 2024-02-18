@@ -3,6 +3,7 @@ package com.example.foodapp.modules.home.view;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
         countriesLayoutManger.setOrientation(RecyclerView.HORIZONTAL);
         countryRecycler.setLayoutManager(countriesLayoutManger);
         homePresenter=new HomePresenter(this);
-        searchView= (SearchView) view.findViewById(R.id.searchView);
+
 
 
         return view;
@@ -134,6 +135,13 @@ public class HomeFragment extends Fragment implements HomeInterface,CategoryClic
                 .into(dailyImg);
         Log.i("TAG", "showRandomMeal: ddddddddddddddddddd"+ meal.getStrMeal() + " " + meal.getStrMealThumb());
         tvDaily.setText(meal.getStrMeal());
+        CardView dailyCard=view.findViewById(R.id.daily_card);
+        dailyCard.setOnClickListener(v -> {
+            Bundle bundle=new Bundle();
+            bundle.putString("type","meal");
+            bundle.putString("meal",meal.getStrMeal());
+            Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_mealFragment,bundle);
+        });
     }
 
     @Override

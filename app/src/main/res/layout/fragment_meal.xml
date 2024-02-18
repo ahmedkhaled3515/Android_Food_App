@@ -26,26 +26,6 @@
             app:layout_constraintStart_toStartOf="@+id/guideline7"
             app:layout_constraintTop_toBottomOf="@+id/ingrediantRecyclerView" />
 
-        <ImageView
-            android:id="@+id/backIconImg"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/back_arrow"
-
-            app:layout_constraintStart_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <TextView
-            android:id="@+id/tvMealTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Food details"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/backIconImg"
-            app:layout_constraintStart_toEndOf="@+id/backIconImg"
-            app:layout_constraintTop_toTopOf="@+id/backIconImg" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
             android:layout_width="wrap_content"
@@ -71,13 +51,12 @@
             android:id="@+id/mealImgMealFragment"
             android:layout_width="0dp"
             android:layout_height="210dp"
-            android:layout_marginTop="24dp"
             android:scaleType="fitXY"
             android:src="@drawable/pizza_img"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toBottomOf="@+id/backIconImg" />
+            app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
         <TextView
             android:id="@+id/mealNameMealFragment"
