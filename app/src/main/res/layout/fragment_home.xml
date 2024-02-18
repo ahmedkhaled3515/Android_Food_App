@@ -13,16 +13,6 @@
         android:background="#FFFFFF"
         tools:context=".modules.home.view.HomeFragment">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sen_bold"
-            android:text="hey Halal, good afternNoon!"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
@@ -44,16 +34,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="30dp" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/search_bar_background"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryRecycler"
             android:layout_width="0dp"
@@ -66,7 +46,7 @@
             tools:listitem="@layout/recycler_view_item" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/daily_card"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="16dp"
@@ -106,10 +86,9 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="@string/daily_meal"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <TextView
             android:id="@+id/textView12"
@@ -118,7 +97,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/categories_text"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+            app:layout_constraintTop_toBottomOf="@+id/daily_card" />
 
         <TextView
             android:id="@+id/textView13"
@@ -151,7 +130,7 @@
             android:layout_height="150dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

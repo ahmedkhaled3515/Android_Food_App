@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -35,6 +36,21 @@ android {
 }
 
 dependencies {
+    dependencies {
+        // Import the BoM for the Firebase platform
+        implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+
+        // Add the dependency for the Firebase Authentication library
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        implementation("com.google.firebase:firebase-auth")
+        implementation("com.google.android.gms:play-services-auth:20.7.0")
+    }
+    implementation ("androidx.room:room-runtime:2.6.1")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-rxjava3:2.6.1")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
+    implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     implementation ("com.airbnb.android:lottie:4.2.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

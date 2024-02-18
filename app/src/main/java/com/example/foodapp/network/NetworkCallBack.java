@@ -13,8 +13,8 @@ public interface NetworkCallBack {
     public void onGetCountriesFailure(Throwable throwable);
     public void onGetRandomMealSuccessful(Meal meal);
     public void onGetRandomMealFailure(Throwable throwable);
-    public void onGetMealsSuccessful(List<Meal> mealList);
-    public void onGetMealsFailure(Throwable throwable);
+    public void onGetMealSuccessful(List<Meal> mealList);
+    public void onGetMealFailure(Throwable throwable);
     public void onGetMealsByCategorySuccessful(List<Meal> mealList);
     public void onGetMealsByCategoryFailure(Throwable t);
 

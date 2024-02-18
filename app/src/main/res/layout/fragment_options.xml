@@ -7,12 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".modules.Options.view.OptionsFragment">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OptionsFragment"
+    <Button
+        android:id="@+id/btnLogoutOption"
+        android:layout_width="254dp"
+        android:layout_height="83dp"
+        android:fontFamily="@font/sen_bold"
+        android:text="Log out"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="346dp"
+        android:layout_height="295dp"
+        android:src="@drawable/baseline_exit_to_app_24"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogoutOption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

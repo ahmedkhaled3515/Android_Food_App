@@ -4,7 +4,7 @@ import com.example.foodapp.model.Meal;
 
 import java.util.List;
 
-public interface CategoryMealsInterface {
+public interface MealsListInterface {
     public void showMeals(List<Meal> mealList);
     public void showMealsError(Throwable t);
 }

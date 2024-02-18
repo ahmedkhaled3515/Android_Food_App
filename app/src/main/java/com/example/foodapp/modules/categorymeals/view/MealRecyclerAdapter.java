@@ -14,14 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodapp.R;
 import com.example.foodapp.model.Meal;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
 public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapter.ViewHolder> {
     List<Meal> mealList;
     Context context;
-    public MealRecyclerAdapter(Context context,List<Meal> mealList)
+    MealsClickListener clickListener;
+    public MealRecyclerAdapter(Context context,MealsClickListener clickListener,List<Meal> mealList)
     {
+        this.clickListener=clickListener;
         this.context=context;
         this.mealList=mealList;
     }
@@ -39,6 +42,16 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
                 .load(mealList.get(position).getStrMealThumb())
                 .into(holder.imgView);
         holder.tvMeal.setText(mealList.get(position).getStrMeal());
+        holder.btnView.setOnClickListener(v -> {
+            clickListener.onViewClickListener(mealList.get(position));
+        });
+        if(FirebaseAuth.getInstance().getCurrentUser() == null)
+        {
+            holder.btnFavourite.setVisibility(View.GONE);
+        }
+        holder.btnFavourite.setOnClickListener(v -> {
+            clickListener.onFavoriteClickListener(mealList.get(position));
+        });
     }
 
     @Override
@@ -50,9 +63,11 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         ImageView imgView;
         TextView tvMeal;
         Button btnFavourite;
+        Button btnView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            btnView=itemView.findViewById(R.id.btnView);
             imgView=itemView.findViewById(R.id.mealImage);
             tvMeal=itemView.findViewById(R.id.tvMealName);
             btnFavourite=itemView.findViewById(R.id.btnFavorite);

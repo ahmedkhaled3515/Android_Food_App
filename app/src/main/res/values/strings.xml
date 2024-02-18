@@ -9,6 +9,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="client_id">921800547410-dic7p7fgam630m0aohcpovflu8cthn1g.apps.googleusercontent.com</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -67,4 +68,11 @@
     <string name="categories_text">Categories</string>
     <string name="view_all"><![CDATA[View All >]]></string>
     <string name="countries_list">Countries List</string>
+    <string name="add_to_favourite_button">Add To Favorite</string>
+    <string name="view_button">view</string>
+    <string name="logout_button">Log out</string>
+    <string name="no_data_text">No Data Found</string>
+    <string name="remove_button">Remove From Favorite</string>
+    <string name="pick_date_button">Pick Date</string>
+    <string name="no_access_text">Sorry You Need To Sign In To Access This Feature</string>
 </resources>

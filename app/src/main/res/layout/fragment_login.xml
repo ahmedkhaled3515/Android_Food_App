@@ -12,7 +12,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/sen_bold"
         android:text="@string/login_title"
         android:textColor="#FFFFFF"
@@ -54,8 +54,9 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="327dp"
                 android:layout_height="62dp"
-                android:layout_marginTop="29dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_background"
+                android:backgroundTint="#C54D4D"
                 android:hapticFeedbackEnabled="false"
                 android:text="@string/login_button"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/passwordText">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
@@ -123,7 +125,7 @@
                 android:id="@+id/remeberBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/sen"
                 android:text="@string/remember_check"
                 app:layout_constraintStart_toStartOf="@+id/passwordEditLayout"
@@ -146,10 +148,11 @@
                 android:id="@+id/tvDontHaveAcc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/sen"
                 android:text="@string/no_accout_text"
+                app:layout_constraintEnd_toStartOf="@+id/tvSignup"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/btnLogin"
                 app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
@@ -157,6 +160,7 @@
                 android:id="@+id/tvSignup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/sen"
                 android:text="@string/signup_text1"
                 android:textColor="#F44336"
@@ -168,21 +172,34 @@
                 android:id="@+id/tvOr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="24dp"
                 android:text="@string/or_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDontHaveAcc" />
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvGuest"
+                app:layout_constraintStart_toEndOf="@+id/tvGuest"
+                app:layout_constraintTop_toTopOf="@+id/tvGuest" />
 
             <ImageView
                 android:id="@+id/googleLoginImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
                 android:src="@drawable/googlelogin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvOr" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvOr"
+                app:layout_constraintStart_toEndOf="@+id/tvOr"
+                app:layout_constraintTop_toTopOf="@+id/tvOr" />
+
+            <TextView
+                android:id="@+id/tvGuest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="Enter as a guest >"
+                android:textColor="#F44336"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvDontHaveAcc"
+                app:layout_constraintTop_toBottomOf="@+id/tvDontHaveAcc" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

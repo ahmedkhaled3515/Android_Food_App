@@ -34,14 +34,24 @@
 
         <Button
             android:id="@+id/btnFavorite"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Button"
+            android:text="@string/add_to_favourite_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mealImage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnView"
             app:layout_constraintTop_toBottomOf="@+id/tvMealName" />
+
+        <Button
+            android:id="@+id/btnView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_button"
+            app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mealImage"
+            app:layout_constraintTop_toTopOf="@+id/btnFavorite" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
