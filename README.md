@@ -1,8 +1,5 @@
 
 # Food Planner App
-
-A brief description of what this project does and who it's for
-////////////
 Food Planner App - A Culinary Journey Across Borders
 In this project, I've delved into the fascinating world of global cuisine, bringing you a convenient and enriching way to explore meals from various countries. Here's a glimpse of what you can expect:
 📱 Meal Details at Your Fingertips: Dive deep into the specifics of each meal, including ingredients and even instructional videos for a step-by-step guide on preparation.
