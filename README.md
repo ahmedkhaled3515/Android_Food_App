@@ -1,4 +1,3 @@
-![Screenshot_20240323_095734](https://github.com/ahmedkhaled3515/Android_Food_App/assets/65148538/bb4dfba4-e675-4b15-a643-68e44fa23197)
 # Food Planner App
 Food Planner App - A Culinary Journey Across Borders
 In this project, I've delved into the fascinating world of global cuisine, bringing you a convenient and enriching way to explore meals from various countries. Here's a glimpse of what you can expect:
@@ -8,6 +7,7 @@ In this project, I've delved into the fascinating world of global cuisine, bring
 🔍 Effortless Search: Whether you're craving a specific dish, exploring cuisines by country, or seeking out recipes based on ingredients or categories, the search feature has got you covered.
 
 ## Screenshots
+
 ![Splash Screen](https://github.com/ahmedkhaled3515/Android_Food_App/assets/65148538/454acc4e-0f9b-46e3-a697-2f2f48872ab7)
 ![Registeration Screen](https://github.com/ahmedkhaled3515/Android_Food_App/assets/65148538/dec5d3e2-fde2-4b44-83fc-b0fab08f9e2d)
 ![Login Screen](https://github.com/ahmedkhaled3515/Android_Food_App/assets/65148538/bdf1c327-477c-41d2-a46e-0e0526c3a89e)
